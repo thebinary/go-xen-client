@@ -8,14 +8,6 @@ import (
 	"os"
 )
 
-const temp_struct = `
-type {{.Name}} struct {
-	{{range .Fields}}
-	{{.Name}} {{.Type}}
-	{{end}}
-}
-`
-
 type EntityLifecycle struct {
 	Transition  string `json:"transition"`
 	Release     string `json:"release"`
@@ -100,15 +92,6 @@ func (field ObjectField) Strings() string {
 func (message ObjectMessage) Strings() string {
 	return fmt.Sprintf("%s | %s | %v | %v\n", message.Name, message.Description, message.Params, message.Result)
 }
-
-const tmpl_obj_struct = `
-//{{.Name}} : {{.Description}}
-type {{.Name}} struct {
-	{{range .Fields}}
-	{{.Name}} {{.Type}} //{{.Description}}
-	{{end}}
-}
-`
 
 func processXenAPI(filename string) (objMap map[string]ObjectDef) {
 	xenapi, err := os.Open(filename)

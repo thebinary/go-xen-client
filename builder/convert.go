@@ -100,9 +100,3 @@ func MapType(typedef string) string {
 		return "unknown"
 	}
 }
-
-/*func main() {
-	typedef_arr := os.Args[1:]
-	typedef := strings.Join(typedef_arr, " ")
-	fmt.Println(typedef, "=", MapType(typedef))
-}*/
