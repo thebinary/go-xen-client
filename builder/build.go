@@ -142,7 +142,8 @@ func main() {
 		}
 
 		// generate only if enums exist in the object
-		if enums := objMap[k].Enums; len(enums) > 0 {
+		// VM_metrics has only one enum that is already included in VM
+		if enums := objMap[k].Enums; len(enums) > 0 && objMap[k].Name != "VM_metrics" {
 			log.Printf("Generating enums definition for: %s", k)
 			err = genObjectEnums("go_xen_client", k, enums)
 			if err != nil {
