@@ -3,4 +3,4 @@ generate:
 	go generate .
 
 clean:
-	rm -vf *.go
+	rm -vf *.gen.go *_string.go
