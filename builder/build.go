@@ -1,6 +1,5 @@
 package main
 
-//go:generate go run build.go helpers.go object.go
 import (
 	"encoding/json"
 	"fmt"
