@@ -97,6 +97,12 @@ func MapType(typedef string) string {
 		mapValueType := MapType(map_types[1])
 		return fmt.Sprintf("map[%s]%s", mapKeyType, mapValueType)
 	} else {
-		return "unknown"
+		/* TODO: unknown types
+		ProbeResult.Sr
+		Event.Snapshot
+		event.from->result
+		SrStat.Uuid
+		*/
+		return "interface{}"
 	}
 }
