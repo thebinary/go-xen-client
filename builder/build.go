@@ -136,7 +136,7 @@ func main() {
 
 	for k := range objMap {
 		log.Printf("Generating object definition for: %s", k)
-		err := genObject("main", objMap[k])
+		err := genObject("go_xen_client", objMap[k])
 		if err != nil {
 			panic(err)
 		}
@@ -144,7 +144,7 @@ func main() {
 		// generate only if enums exist in the object
 		if enums := objMap[k].Enums; len(enums) > 0 {
 			log.Printf("Generating enums definition for: %s", k)
-			err = genObjectEnums("main", k, enums)
+			err = genObjectEnums("go_xen_client", k, enums)
 			if err != nil {
 				panic(err)
 			}
