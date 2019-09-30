@@ -16,6 +16,15 @@ type {{CamelCase $e.Name}} int
 const({{range $j, $v := $e.Values}}
   {{if (eq $j 0)}} {{CamelCase $e.Name}}{{CamelCase $v.Name}} {{CamelCase $e.Name}} = iota //{{$v.Doc}} {{else}} {{CamelCase $e.Name}}{{CamelCase $v.Name}} //{{$v.Doc}} {{end}} {{end}}
 )
+
+func To{{CamelCase $e.Name}}(strValue string) {{CamelCase $e.Name}} {
+	switch strValue { {{range $j, $v := $e.Values}}
+		case "{{$v.Name}}":
+			return {{$j}}{{end}}
+		default:
+			return -1
+	}
+}
 {{end}}
 `
 
