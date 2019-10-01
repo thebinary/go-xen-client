@@ -51,9 +51,14 @@ func (client *XenClient) {{CamelCase $o.Name}}{{CamelCase .Name}}({{range .Param
 `
 
 func genReturn(resultType string) (returnCode string) {
+	returnCode = "//result conversion not implemented yet"
+	returnCode += "\n" + `log.Printf("%+v", obj)`
+
 	if resultType == "void" {
 		returnCode = "// no return result"
-	} else if isPrimitive(resultType) {
+	} else if MapType(resultType) == "interface{}" {
+		returnCode = "result = obj"
+	} else if isPrimitive(MapType(resultType)) || isPrimitive(resultType) {
 		returnCode = fmt.Sprintf("result = obj.(%s)", MapType(resultType))
 	} else if isSet(resultType) {
 		setElementType := MapType(strings.TrimSpace(strings.Replace(resultType, " set", "", -1)))
@@ -71,9 +76,67 @@ func genReturn(resultType string) (returnCode string) {
 				result[i] = %s
 			}
 		`, MapType(resultType), conversionCode)
+	} else if isMap(resultType) {
+		mapTypedef := strings.Replace(resultType, "(", "", -1)
+		mapTypedef = strings.Replace(mapTypedef, ")", "", -1)
+		mapTypedef = strings.Replace(mapTypedef, " map", "", -1)
+		map_types := strings.Split(mapTypedef, " -> ")
+		mapKeyType := MapType(strings.TrimSpace(map_types[0]))
+		mapValueType := MapType(strings.TrimSpace(map_types[1]))
+
+		if mapKeyType == "string" {
+			if mapValueType == "string" {
+				returnCode = `
+					interim := reflect.ValueOf(obj)
+					result = map[string]string{}
+					for _, key := range interim.MapKeys() {
+						obj := interim.MapIndex(key)
+						result[key.String()] = obj.String()
+					}
+				`
+			} else if isSet(map_types[1]) {
+				setElementType := MapType(strings.TrimSpace(strings.Replace(map_types[1], " set", "", -1)))
+				if isEnum(setElementType) {
+					returnCode = fmt.Sprintf(`
+						interim := reflect.ValueOf(obj)
+						result = map[string]%s{}
+						for _, key := range interim.MapKeys() {
+							obj := interim.MapIndex(key)
+							mapObj := To%s(obj.String())
+							result[key.String()] = mapObj
+						}
+					`, mapValueType, mapValueType)
+				}
+			} else if isEnum(map_types[1]) {
+				returnCode = fmt.Sprintf(`
+						interim := reflect.ValueOf(obj)
+						result = map[string]%s{}
+						for _, key := range interim.MapKeys() {
+							obj := interim.MapIndex(key)
+							mapObj := To%s(obj.String())
+							result[key.String()] = mapObj
+						}
+					`, mapValueType, mapValueType)
+			} else if !isPrimitive(map_types[1]) {
+				returnCode = fmt.Sprintf(`
+						interim := reflect.ValueOf(obj)
+						result = map[string]%s{}
+						for _, key := range interim.MapKeys() {
+							obj := interim.MapIndex(key)
+							mapObj := To%s(obj.Interface())
+							result[key.String()] = *mapObj
+						}
+					`, mapValueType, mapValueType)
+			}
+		}
+	} else if isEnum(resultType) {
+		returnCode = fmt.Sprintf(`
+			result = To%s(obj.(string))
+		`, MapType(resultType))
 	} else {
-		returnCode = "//not implemented yet"
-		returnCode += "\n" + `log.Printf("%+v", obj)`
+		returnCode = fmt.Sprintf(`
+			result = *To%s(obj.(interface{}))
+		`, MapType(resultType))
 	}
 	return returnCode
 }
