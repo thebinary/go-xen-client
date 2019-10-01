@@ -84,49 +84,73 @@ func genReturn(resultType string) (returnCode string) {
 		mapKeyType := MapType(strings.TrimSpace(map_types[0]))
 		mapValueType := MapType(strings.TrimSpace(map_types[1]))
 
-		if mapKeyType == "string" {
-			if mapValueType == "string" {
-				returnCode = `
+		if mapKeyType == "string" || mapKeyType == "int" {
+			mapKeyReflect := "key.String()"
+			if mapKeyType == "int" {
+				mapKeyReflect = "int(key.Int())"
+			}
+			if mapValueType == "string" || mapValueType == "int" {
+				mapValueReflect := "obj.String()"
+				if mapValueType == "int" {
+					mapValueReflect = "int(obj.Int())"
+				} else if mapValueType == "float32" {
+					mapValueReflect = "float32(obj.Float())"
+				}
+				returnCode = fmt.Sprintf(`
 					interim := reflect.ValueOf(obj)
-					result = map[string]string{}
+					result = map[%s]%s{}
 					for _, key := range interim.MapKeys() {
 						obj := interim.MapIndex(key)
-						result[key.String()] = obj.String()
+						result[%s] = %s
 					}
-				`
+				`, mapKeyType, mapValueType, mapKeyReflect, mapValueReflect)
 			} else if isSet(map_types[1]) {
 				setElementType := MapType(strings.TrimSpace(strings.Replace(map_types[1], " set", "", -1)))
 				if isEnum(setElementType) {
 					returnCode = fmt.Sprintf(`
 						interim := reflect.ValueOf(obj)
-						result = map[string]%s{}
+						result = map[%s]%s{}
 						for _, key := range interim.MapKeys() {
 							obj := interim.MapIndex(key)
 							mapObj := To%s(obj.String())
-							result[key.String()] = mapObj
+							result[%s] = mapObj
 						}
-					`, mapValueType, mapValueType)
+					`, mapKeyType, mapValueType, mapValueType, mapKeyReflect)
+				} else if setElementType == "string" {
+					returnCode = fmt.Sprintf(`
+						interim := reflect.ValueOf(obj)
+						result = map[%s][]string{}
+						for _, key := range interim.MapKeys() {
+							obj := interim.MapIndex(key)
+							interimObj := obj.Interface().([]interface{})
+							interimResult := make([]string, len(interimObj))
+							for i, interimValue := range interimObj {
+								interimResult[i] = interimValue.(string)
+							}
+							result[%s] = interimResult
+						}
+					`, mapKeyType, mapKeyReflect)
 				}
 			} else if isEnum(map_types[1]) {
 				returnCode = fmt.Sprintf(`
 						interim := reflect.ValueOf(obj)
-						result = map[string]%s{}
+						result = map[%s]%s{}
 						for _, key := range interim.MapKeys() {
 							obj := interim.MapIndex(key)
 							mapObj := To%s(obj.String())
-							result[key.String()] = mapObj
+							result[%s] = mapObj
 						}
-					`, mapValueType, mapValueType)
+					`, mapKeyType, mapValueType, mapValueType, mapKeyReflect)
 			} else if !isPrimitive(map_types[1]) {
 				returnCode = fmt.Sprintf(`
 						interim := reflect.ValueOf(obj)
-						result = map[string]%s{}
+						result = map[%s]%s{}
 						for _, key := range interim.MapKeys() {
 							obj := interim.MapIndex(key)
 							mapObj := To%s(obj.Interface())
-							result[key.String()] = *mapObj
+							result[%s] = *mapObj
 						}
-					`, mapValueType, mapValueType)
+					`, mapKeyType, mapValueType, mapValueType, mapKeyReflect)
 			}
 		}
 	} else if isEnum(resultType) {
