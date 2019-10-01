@@ -56,12 +56,21 @@ func genReturn(resultType string) (returnCode string) {
 	} else if isPrimitive(resultType) {
 		returnCode = fmt.Sprintf("result = obj.(%s)", MapType(resultType))
 	} else if isSet(resultType) {
+		setElementType := MapType(strings.TrimSpace(strings.Replace(resultType, " set", "", -1)))
+		conversionCode := fmt.Sprintf(`value.(%s)`, setElementType)
+		if !isPrimitive(setElementType) {
+			if isEnum(resultType) {
+				conversionCode = fmt.Sprintf("To%s(value.(string))", setElementType)
+			} else {
+				conversionCode = fmt.Sprintf("*To%s(value)", setElementType)
+			}
+		}
 		returnCode = fmt.Sprintf(`
 			result = make(%s, len(obj.([]interface{})))
 			for i, value := range obj.([]interface{}) {
-				result[i] = value.(%s)
+				result[i] = %s
 			}
-		`, MapType(resultType), strings.Replace(MapType(resultType), "[]", "", -1))
+		`, MapType(resultType), conversionCode)
 	} else {
 		returnCode = "//not implemented yet"
 		returnCode += "\n" + `log.Printf("%+v", obj)`
