@@ -11,6 +11,7 @@ func isPrimitive(typedef string) bool {
 	case "bool",
 		"datetime",
 		"float",
+		"float32",
 		"int",
 		"string":
 		return true
@@ -86,7 +87,7 @@ func MapType(typedef string) string {
 		//return "Ref" + ToCamelCase(typedefRef)
 		return "string"
 	} else if isRecord(typedef) {
-		typedefRecord := strings.Replace(typedef, "record", "", -1)
+		typedefRecord := strings.Replace(typedef, " record", "", -1)
 		return ToCamelCase(typedefRecord)
 	} else if isMap(typedef) {
 		mapTypedef := strings.Replace(typedef, "(", "", -1)
