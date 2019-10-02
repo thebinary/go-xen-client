@@ -72,11 +72,15 @@ func genObjectFieldConversion(field ObjectField) (returnCode string) {
 		mapValueType := MapType(strings.TrimSpace(map_types[1]))
 
 		if mapKeyType == "string" {
-			mappingcode := fmt.Sprintf(`if v, ok := mapKeyValue.(string); ok {
+			mappingNullValue := `""`
+			if isPrimitive(map_types[1]) && mapValueType != "string" {
+				mappingNullValue = "0"
+			}
+			mappingcode := fmt.Sprintf(`if v, ok := mapKeyValue.(%s); ok {
 					resultObj.%s[mapKeyName] = v
 				} else {
-					resultObj.%s[mapKeyName] = ""
-				}`, camelFieldName, camelFieldName)
+					resultObj.%s[mapKeyName] = %s
+				}`, mapValueType, camelFieldName, camelFieldName, mappingNullValue)
 			if isEnum(map_types[1]) {
 				mappingcode = fmt.Sprintf(`if v, ok := mapKeyValue.(string); ok {
 						resultObj.%s[mapKeyName] = To%s(v)
