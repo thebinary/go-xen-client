@@ -16,24 +16,10 @@ type EntityLifecycle struct {
 type ObjectField struct {
 	Name        string            `json:"name"`
 	Description string            `json:"description"`
-	Type        ObjectFieldType   `json:"type"`
+	Type        string            `json:"type"`
 	Qualifier   string            `json:"qualifier"`
 	Tag         string            `json:"tag"`
 	Lifecycle   []EntityLifecycle `json:"lifecycle"`
-}
-
-type ObjectFieldType string
-
-func (fieldType *ObjectFieldType) UnmarshalJSON(b []byte) error {
-	var typeStr string
-	err := json.Unmarshal(b, &typeStr)
-	if err != nil {
-		log.Printf("[JSON_UNMARSHAL_ERR] ObjectFieldType err: %v | %s", err, typeStr)
-	}
-
-	typeName := MapType(typeStr)
-	*fieldType = ObjectFieldType(typeName)
-	return nil
 }
 
 type ObjectMessage struct {

@@ -14,7 +14,7 @@ package {{.Package}}
 {{$o := .Object}}
 //{{CamelCase .Object.Name}}: {{.Object.Description}}
 type {{CamelCase .Object.Name}} struct {
-  {{range .Object.Fields}}{{CamelCase .Name}} {{.Type}}               // {{.Description}}
+  {{range .Object.Fields}}{{CamelCase .Name}} {{TypeName .Type}}               // {{.Description}}
   {{end}}
 }
 
@@ -28,9 +28,7 @@ func To{{CamelCase .Object.Name}}(obj interface{}) (resultObj *{{CamelCase .Obje
 		keyValue := objValue.MapIndex(oKey).Interface()
 		switch keyName { {{range .Object.Fields}}
 			case "{{.Name}}":
-				if v, ok := keyValue.({{.Type}}); ok {
-					resultObj.{{CamelCase .Name}} = v
-				}{{end}}
+				{{ObjectFieldConversion .}}{{end}}
 		}
 	}
 
@@ -49,6 +47,65 @@ func (client *XenClient) {{CamelCase $o.Name}}{{CamelCase .Name}}({{range .Param
 }
 {{end}}
 `
+
+func genObjectFieldConversion(field ObjectField) (returnCode string) {
+	returnCode = ""
+	typedef := string(field.Type)
+	fieldType := MapType(typedef)
+	camelFieldName := ToCamelCase(field.Name)
+	if isSet(typedef) {
+		setElementType := strings.Replace(typedef, " set", "", -1)
+		returnCode += fmt.Sprintf(`if interim, ok := keyValue.([]interface{}); ok {
+			resultObj.%s = make(%s, len(interim))
+			for i, interimValue := range interim {
+				if v, ok := interimValue.(%s); ok {
+					resultObj.%s[i] = v
+				}
+			}
+		}`, camelFieldName, fieldType, MapType(setElementType), camelFieldName)
+	} else if isMap(typedef) {
+		mapTypedef := strings.Replace(typedef, "(", "", -1)
+		mapTypedef = strings.Replace(mapTypedef, ")", "", -1)
+		mapTypedef = strings.Replace(mapTypedef, " map", "", -1)
+		map_types := strings.Split(mapTypedef, " -> ")
+		mapKeyType := MapType(strings.TrimSpace(map_types[0]))
+		mapValueType := MapType(strings.TrimSpace(map_types[1]))
+
+		if mapKeyType == "string" {
+			mappingcode := fmt.Sprintf(`if v, ok := mapKeyValue.(string); ok {
+					resultObj.%s[mapKeyName] = v
+				} else {
+					resultObj.%s[mapKeyName] = ""
+				}`, camelFieldName, camelFieldName)
+			if isEnum(map_types[1]) {
+				mappingcode = fmt.Sprintf(`if v, ok := mapKeyValue.(string); ok {
+						resultObj.%s[mapKeyName] = To%s(v)
+					} else {
+						resultObj.%s[mapKeyName] = 0
+					}`, camelFieldName, mapValueType, camelFieldName)
+			}
+
+			returnCode += fmt.Sprintf(`
+				resultObj.%s = map[string]%s{}
+				interimMap := reflect.ValueOf(keyValue).MapKeys()
+				for _, mapKey := range interimMap {
+					mapKeyName := mapKey.String()
+					mapKeyValue := reflect.ValueOf(keyValue).MapIndex(mapKey).Interface()
+					%s
+				}`, camelFieldName, mapValueType, mappingcode)
+		}
+	} else if isPrimitive(typedef) || isEnum(typedef) {
+		returnCode += fmt.Sprintf(`if v, ok := keyValue.(%s); ok {
+			resultObj.%s = v
+		}`, fieldType, camelFieldName)
+	} else {
+		returnCode += fmt.Sprintf(`if v, ok := keyValue.(%s); ok {
+			resultObj.%s = v
+		}`, fieldType, camelFieldName)
+	}
+
+	return returnCode
+}
 
 func genReturn(resultType string) (returnCode string) {
 	returnCode = "//result conversion not implemented yet"
@@ -177,9 +234,10 @@ func genObject(packageName string, objDef ObjectDef) (err error) {
 
 	tmpl, err := template.New("object").Funcs(
 		map[string]interface{}{
-			"CamelCase": ToCamelCase,
-			"TypeName":  MapType,
-			"GenResult": genReturn,
+			"CamelCase":             ToCamelCase,
+			"TypeName":              MapType,
+			"GenResult":             genReturn,
+			"ObjectFieldConversion": genObjectFieldConversion,
 		},
 	).Parse(template_obj)
 	if err != nil {
