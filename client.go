@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/nilshell/xmlrpc"
 )
@@ -82,7 +83,12 @@ func (client *XenClient) APICall(method string, params ...interface{}) (result i
 	p[0] = client.Session
 
 	for idx, element := range params {
-		p[idx+1] = element
+		switch element.(type) {
+		case int:
+			p[idx+1] = strconv.Itoa(element.(int))
+		default:
+			p[idx+1] = element
+		}
 	}
 
 	res := xmlrpc.Struct{}
