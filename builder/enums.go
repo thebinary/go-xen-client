@@ -11,11 +11,22 @@ const template_obj_enums = `// This is a generated file. DO NOT EDIT manually.
 package {{.Package}}
 {{range $i, $e := .Enums}}
 //{{CamelCase $e.Name}}: {{$e.Name}} enum type
-//go:generate stringer -type {{CamelCase $e.Name}}
 type {{CamelCase $e.Name}} int
 const({{range $j, $v := $e.Values}}
   {{if (eq $j 0)}} {{CamelCase $e.Name}}{{CamelCase $v.Name}} {{CamelCase $e.Name}} = iota //{{$v.Doc}} {{else}} {{CamelCase $e.Name}}{{CamelCase $v.Name}} //{{$v.Doc}} {{end}} {{end}}
 )
+
+func (e {{CamelCase $e.Name}}) String() string {
+	switch e {
+		{{range $j, $v := $e.Values}}
+	case {{$j}}:
+			return "{{$v.Name}}"
+		{{end}}
+		default:
+			return ""
+	}
+
+}
 
 func To{{CamelCase $e.Name}}(strValue string) {{CamelCase $e.Name}} {
 	switch strValue { {{range $j, $v := $e.Values}}
