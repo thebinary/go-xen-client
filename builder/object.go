@@ -38,7 +38,7 @@ func To{{CamelCase .Object.Name}}(obj interface{}) (resultObj *{{CamelCase .Obje
 {{range .Object.Messages}}
 /* {{CamelCase .Name}}: {{.Description}} */{{$resultType := index .Result 0}}
 func (client *XenClient) {{CamelCase $o.Name}}{{CamelCase .Name}}({{range .Params}}{{if (eq .Name "session_id")}}{{else}}{{if (eq .Name "type")}}xtype{{else}}{{.Name}}{{end}} {{TypeName .Type}},{{end}}{{end}}) ({{if (eq $resultType "void")}}{{else}}result {{TypeName $resultType}}, {{end}}err error){
-	{{if (eq $resultType "void")}}_, err ={{else}}obj, err :={{end}} client.APICall("{{$o.Name}}.{{.Name}}", {{range .Params}}{{if (eq .Name "session_id")}}{{else}}{{if (eq .Name "type")}}xtype{{else}}{{.Name}}{{end}},{{end}}{{end}})
+	{{if (eq $resultType "void")}}_, err ={{else}}obj, err :={{end}} client.APICall("{{$o.Name}}.{{.Name}}", {{range .Params}}{{if (eq .Name "session_id")}}{{else}}{{if (eq .Name "type")}}xtype{{else}}{{if (IsEnum .Type)}}{{.Name}}.String(){{else}}{{.Name}}{{end}}{{end}},{{end}}{{end}})
 	if err != nil {
 		return
 	}
@@ -242,6 +242,7 @@ func genObject(packageName string, objDef ObjectDef) (err error) {
 			"TypeName":              MapType,
 			"GenResult":             genReturn,
 			"ObjectFieldConversion": genObjectFieldConversion,
+			"IsEnum":                isEnum,
 		},
 	).Parse(template_obj)
 	if err != nil {
