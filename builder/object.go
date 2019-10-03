@@ -19,6 +19,7 @@ type {{CamelCase .Object.Name}} struct {
 }
 
 func From{{CamelCase .Object.Name}}ToXml({{.Object.Name}} *{{CamelCase .Object.Name}}) (result xmlrpc.Struct) {
+	result = make(xmlrpc.Struct)
 	{{range .Object.Fields}}
 	result["{{.Name}}"] = {{$o.Name}}.{{CamelCase .Name}}{{end}}
 	return result
