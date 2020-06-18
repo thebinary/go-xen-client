@@ -21,7 +21,21 @@ type {{CamelCase .Object.Name}} struct {
 func From{{CamelCase .Object.Name}}ToXml({{.Object.Name}} *{{CamelCase .Object.Name}}) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 	{{range .Object.Fields}}
-	result["{{.Name}}"] = {{$o.Name}}.{{CamelCase .Name}}{{end}}
+	{{if (IsMap .Type)}}
+		{{.Name}} := make(xmlrpc.Struct)
+		for key, value := range {{$o.Name}}.{{CamelCase .Name}} {
+			{{.Name}}[{{if (eq (MapKeyType .Type) "int")}}strconv.Itoa(key){{else}}key{{if (IsEnum (MapKeyType .Type))}}.String(){{end}}{{end}}] = value{{if (IsEnum .Type)}}.String(){{end}}
+		}
+		result["{{.Name}}"] = {{.Name}}
+	{{else}}
+		result["{{.Name}}"] =
+		{{if (eq (TypeName .Type) "int")}}
+			strconv.Itoa({{$o.Name}}.{{CamelCase .Name}})
+		{{else}}
+			{{$o.Name}}.{{CamelCase .Name}}{{if (IsSet .Type)}}{{else}}{{if (IsEnum .Type)}}.String(){{end}}{{end}}
+		{{end}}
+	{{end}}
+	{{end}}
 	return result
 }
 
@@ -251,6 +265,11 @@ func genObject(packageName string, objDef ObjectDef) (err error) {
 			"ObjectFieldConversion": genObjectFieldConversion,
 			"IsEnum":                isEnum,
 			"IsRecord":              isRecord,
+			"IsSet":                 isSet,
+			"IsMap":                 isMap,
+			"IsPrimitive":           isPrimitive,
+			"MapKeyType":            MapKeyType,
+			"MapValueType":          MapValueType,
 		},
 	).Parse(template_obj)
 	if err != nil {

@@ -70,6 +70,24 @@ func ToCamelCase(org string) string {
 	return camelStr
 }
 
+func extractMapElements(typedef string) (keyTypeDef, valueTypeDef string) {
+	mapTypedef := strings.Replace(typedef, "(", "", -1)
+	mapTypedef = strings.Replace(mapTypedef, ")", "", -1)
+	mapTypedef = strings.Replace(mapTypedef, " map", "", -1)
+	map_types := strings.Split(mapTypedef, " -> ")
+	return map_types[0], map_types[1]
+}
+
+func MapKeyType(typedef string) string {
+	keyTypeDef, _ := extractMapElements(typedef)
+	return keyTypeDef
+}
+
+func MapValueType(typedef string) string {
+	_, valueTypeDef := extractMapElements(typedef)
+	return valueTypeDef
+}
+
 func MapType(typedef string) string {
 	//typedef_arr := strings.Split(typedef, " ")
 	if isPrimitive(typedef) {
