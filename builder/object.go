@@ -28,12 +28,7 @@ func From{{CamelCase .Object.Name}}ToXml({{.Object.Name}} *{{CamelCase .Object.N
 		}
 		result["{{.Name}}"] = {{.Name}}
 	{{else}}
-		result["{{.Name}}"] =
-		{{if (eq (TypeName .Type) "int")}}
-			strconv.Itoa({{$o.Name}}.{{CamelCase .Name}})
-		{{else}}
-			{{$o.Name}}.{{CamelCase .Name}}{{if (IsSet .Type)}}{{else}}{{if (IsEnum .Type)}}.String(){{end}}{{end}}
-		{{end}}
+		result["{{.Name}}"] = {{if (eq (TypeName .Type) "int")}}strconv.Itoa({{$o.Name}}.{{CamelCase .Name}}){{else}}{{$o.Name}}.{{CamelCase .Name}}{{if (IsSet .Type)}}{{else}}{{if (IsEnum .Type)}}.String(){{end}}{{end}}{{end}}
 	{{end}}
 	{{end}}
 	return result
