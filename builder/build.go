@@ -102,6 +102,23 @@ func processXenAPI(filename string) (objMap map[string]ObjectDef) {
 func main() {
 	objMap := processXenAPI("xenapi.json")
 
+	/*
+		err := genObject("go_xen_client", objMap["host"])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		err = genObjectEnums("go_xen_client", "host", objMap["host"].Enums)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		err = genObject("go_xen_client", objMap["data_source"])
+		if err != nil {
+			log.Fatal(err)
+		}
+	*/
+
 	for k := range objMap {
 		log.Printf("Generating object definition for: %s", k)
 		err := genObject("go_xen_client", objMap[k])
@@ -121,4 +138,5 @@ func main() {
 			log.Printf("Ignoring enums definition for: %s, enums_count=0", k)
 		}
 	}
+
 }
