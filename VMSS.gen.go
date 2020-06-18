@@ -29,33 +29,19 @@ type VMSS struct {
 func FromVMSSToXml(VMSS *VMSS) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VMSS.Uuid
 
-		VMSS.Uuid
+	result["name_label"] = VMSS.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = VMSS.NameDescription
 
-		VMSS.NameLabel
+	result["enabled"] = VMSS.Enabled
 
-	result["name_description"] =
+	result["type"] = VMSS.Type.String()
 
-		VMSS.NameDescription
+	result["retained_snapshots"] = strconv.Itoa(VMSS.RetainedSnapshots)
 
-	result["enabled"] =
-
-		VMSS.Enabled
-
-	result["type"] =
-
-		VMSS.Type.String()
-
-	result["retained_snapshots"] =
-
-		strconv.Itoa(VMSS.RetainedSnapshots)
-
-	result["frequency"] =
-
-		VMSS.Frequency.String()
+	result["frequency"] = VMSS.Frequency.String()
 
 	schedule := make(xmlrpc.Struct)
 	for key, value := range VMSS.Schedule {
@@ -63,13 +49,9 @@ func FromVMSSToXml(VMSS *VMSS) (result xmlrpc.Struct) {
 	}
 	result["schedule"] = schedule
 
-	result["last_run_time"] =
+	result["last_run_time"] = VMSS.LastRunTime
 
-		VMSS.LastRunTime
-
-	result["VMs"] =
-
-		VMSS.VMs
+	result["VMs"] = VMSS.VMs
 
 	return result
 }

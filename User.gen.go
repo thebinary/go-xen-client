@@ -21,17 +21,11 @@ type User struct {
 func FromUserToXml(user *User) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = user.Uuid
 
-		user.Uuid
+	result["short_name"] = user.ShortName
 
-	result["short_name"] =
-
-		user.ShortName
-
-	result["fullname"] =
-
-		user.Fullname
+	result["fullname"] = user.Fullname
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range user.OtherConfig {

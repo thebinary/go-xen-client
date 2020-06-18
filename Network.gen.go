@@ -34,21 +34,13 @@ type Network struct {
 func FromNetworkToXml(network *Network) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = network.Uuid
 
-		network.Uuid
+	result["name_label"] = network.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = network.NameDescription
 
-		network.NameLabel
-
-	result["name_description"] =
-
-		network.NameDescription
-
-	result["allowed_operations"] =
-
-		network.AllowedOperations
+	result["allowed_operations"] = network.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range network.CurrentOperations {
@@ -56,17 +48,11 @@ func FromNetworkToXml(network *Network) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["VIFs"] =
+	result["VIFs"] = network.VIFs
 
-		network.VIFs
+	result["PIFs"] = network.PIFs
 
-	result["PIFs"] =
-
-		network.PIFs
-
-	result["MTU"] =
-
-		strconv.Itoa(network.MTU)
+	result["MTU"] = strconv.Itoa(network.MTU)
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range network.OtherConfig {
@@ -74,13 +60,9 @@ func FromNetworkToXml(network *Network) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["bridge"] =
+	result["bridge"] = network.Bridge
 
-		network.Bridge
-
-	result["managed"] =
-
-		network.Managed
+	result["managed"] = network.Managed
 
 	blobs := make(xmlrpc.Struct)
 	for key, value := range network.Blobs {
@@ -88,13 +70,9 @@ func FromNetworkToXml(network *Network) (result xmlrpc.Struct) {
 	}
 	result["blobs"] = blobs
 
-	result["tags"] =
+	result["tags"] = network.Tags
 
-		network.Tags
-
-	result["default_locking_mode"] =
-
-		network.DefaultLockingMode.String()
+	result["default_locking_mode"] = network.DefaultLockingMode.String()
 
 	assigned_ips := make(xmlrpc.Struct)
 	for key, value := range network.AssignedIps {
@@ -102,9 +80,7 @@ func FromNetworkToXml(network *Network) (result xmlrpc.Struct) {
 	}
 	result["assigned_ips"] = assigned_ips
 
-	result["purpose"] =
-
-		network.Purpose
+	result["purpose"] = network.Purpose
 
 	return result
 }

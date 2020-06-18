@@ -23,21 +23,13 @@ type VIFMetrics struct {
 func FromVIFMetricsToXml(VIF_metrics *VIFMetrics) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VIF_metrics.Uuid
 
-		VIF_metrics.Uuid
+	result["io_read_kbs"] = VIF_metrics.IoReadKbs
 
-	result["io_read_kbs"] =
+	result["io_write_kbs"] = VIF_metrics.IoWriteKbs
 
-		VIF_metrics.IoReadKbs
-
-	result["io_write_kbs"] =
-
-		VIF_metrics.IoWriteKbs
-
-	result["last_updated"] =
-
-		VIF_metrics.LastUpdated
+	result["last_updated"] = VIF_metrics.LastUpdated
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VIF_metrics.OtherConfig {

@@ -29,21 +29,13 @@ type PGPU struct {
 func FromPGPUToXml(PGPU *PGPU) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PGPU.Uuid
 
-		PGPU.Uuid
+	result["PCI"] = PGPU.PCI
 
-	result["PCI"] =
+	result["GPU_group"] = PGPU.GPUGroup
 
-		PGPU.PCI
-
-	result["GPU_group"] =
-
-		PGPU.GPUGroup
-
-	result["host"] =
-
-		PGPU.Host
+	result["host"] = PGPU.Host
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range PGPU.OtherConfig {
@@ -51,17 +43,11 @@ func FromPGPUToXml(PGPU *PGPU) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["supported_VGPU_types"] =
+	result["supported_VGPU_types"] = PGPU.SupportedVGPUTypes
 
-		PGPU.SupportedVGPUTypes
+	result["enabled_VGPU_types"] = PGPU.EnabledVGPUTypes
 
-	result["enabled_VGPU_types"] =
-
-		PGPU.EnabledVGPUTypes
-
-	result["resident_VGPUs"] =
-
-		PGPU.ResidentVGPUs
+	result["resident_VGPUs"] = PGPU.ResidentVGPUs
 
 	supported_VGPU_max_capacities := make(xmlrpc.Struct)
 	for key, value := range PGPU.SupportedVGPUMaxCapacities {
@@ -69,13 +55,9 @@ func FromPGPUToXml(PGPU *PGPU) (result xmlrpc.Struct) {
 	}
 	result["supported_VGPU_max_capacities"] = supported_VGPU_max_capacities
 
-	result["dom0_access"] =
+	result["dom0_access"] = PGPU.Dom0Access.String()
 
-		PGPU.Dom0Access.String()
-
-	result["is_system_display_device"] =
-
-		PGPU.IsSystemDisplayDevice
+	result["is_system_display_device"] = PGPU.IsSystemDisplayDevice
 
 	compatibility_metadata := make(xmlrpc.Struct)
 	for key, value := range PGPU.CompatibilityMetadata {

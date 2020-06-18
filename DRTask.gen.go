@@ -19,13 +19,9 @@ type DRTask struct {
 func FromDRTaskToXml(DR_task *DRTask) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = DR_task.Uuid
 
-		DR_task.Uuid
-
-	result["introduced_SRs"] =
-
-		DR_task.IntroducedSRs
+	result["introduced_SRs"] = DR_task.IntroducedSRs
 
 	return result
 }

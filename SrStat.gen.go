@@ -25,33 +25,19 @@ type SrStat struct {
 func FromSrStatToXml(sr_stat *SrStat) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = sr_stat.Uuid
 
-		sr_stat.Uuid
+	result["name_label"] = sr_stat.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = sr_stat.NameDescription
 
-		sr_stat.NameLabel
+	result["free_space"] = strconv.Itoa(sr_stat.FreeSpace)
 
-	result["name_description"] =
+	result["total_space"] = strconv.Itoa(sr_stat.TotalSpace)
 
-		sr_stat.NameDescription
+	result["clustered"] = sr_stat.Clustered
 
-	result["free_space"] =
-
-		strconv.Itoa(sr_stat.FreeSpace)
-
-	result["total_space"] =
-
-		strconv.Itoa(sr_stat.TotalSpace)
-
-	result["clustered"] =
-
-		sr_stat.Clustered
-
-	result["health"] =
-
-		sr_stat.Health.String()
+	result["health"] = sr_stat.Health.String()
 
 	return result
 }

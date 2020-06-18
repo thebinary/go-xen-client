@@ -31,53 +31,29 @@ type HostCpu struct {
 func FromHostCpuToXml(host_cpu *HostCpu) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = host_cpu.Uuid
 
-		host_cpu.Uuid
+	result["host"] = host_cpu.Host
 
-	result["host"] =
+	result["number"] = strconv.Itoa(host_cpu.Number)
 
-		host_cpu.Host
+	result["vendor"] = host_cpu.Vendor
 
-	result["number"] =
+	result["speed"] = strconv.Itoa(host_cpu.Speed)
 
-		strconv.Itoa(host_cpu.Number)
+	result["modelname"] = host_cpu.Modelname
 
-	result["vendor"] =
+	result["family"] = strconv.Itoa(host_cpu.Family)
 
-		host_cpu.Vendor
+	result["model"] = strconv.Itoa(host_cpu.Model)
 
-	result["speed"] =
+	result["stepping"] = host_cpu.Stepping
 
-		strconv.Itoa(host_cpu.Speed)
+	result["flags"] = host_cpu.Flags
 
-	result["modelname"] =
+	result["features"] = host_cpu.Features
 
-		host_cpu.Modelname
-
-	result["family"] =
-
-		strconv.Itoa(host_cpu.Family)
-
-	result["model"] =
-
-		strconv.Itoa(host_cpu.Model)
-
-	result["stepping"] =
-
-		host_cpu.Stepping
-
-	result["flags"] =
-
-		host_cpu.Flags
-
-	result["features"] =
-
-		host_cpu.Features
-
-	result["utilisation"] =
-
-		host_cpu.Utilisation
+	result["utilisation"] = host_cpu.Utilisation
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range host_cpu.OtherConfig {

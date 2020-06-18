@@ -28,41 +28,23 @@ type PoolPatch struct {
 func FromPoolPatchToXml(pool_patch *PoolPatch) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = pool_patch.Uuid
 
-		pool_patch.Uuid
+	result["name_label"] = pool_patch.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = pool_patch.NameDescription
 
-		pool_patch.NameLabel
+	result["version"] = pool_patch.Version
 
-	result["name_description"] =
+	result["size"] = strconv.Itoa(pool_patch.Size)
 
-		pool_patch.NameDescription
+	result["pool_applied"] = pool_patch.PoolApplied
 
-	result["version"] =
+	result["host_patches"] = pool_patch.HostPatches
 
-		pool_patch.Version
+	result["after_apply_guidance"] = pool_patch.AfterApplyGuidance
 
-	result["size"] =
-
-		strconv.Itoa(pool_patch.Size)
-
-	result["pool_applied"] =
-
-		pool_patch.PoolApplied
-
-	result["host_patches"] =
-
-		pool_patch.HostPatches
-
-	result["after_apply_guidance"] =
-
-		pool_patch.AfterApplyGuidance
-
-	result["pool_update"] =
-
-		pool_patch.PoolUpdate
+	result["pool_update"] = pool_patch.PoolUpdate
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range pool_patch.OtherConfig {

@@ -26,33 +26,19 @@ type Message struct {
 func FromMessageToXml(message *Message) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = message.Uuid
 
-		message.Uuid
+	result["name"] = message.Name
 
-	result["name"] =
+	result["priority"] = strconv.Itoa(message.Priority)
 
-		message.Name
+	result["cls"] = message.Cls.String()
 
-	result["priority"] =
+	result["obj_uuid"] = message.ObjUuid
 
-		strconv.Itoa(message.Priority)
+	result["timestamp"] = message.Timestamp
 
-	result["cls"] =
-
-		message.Cls.String()
-
-	result["obj_uuid"] =
-
-		message.ObjUuid
-
-	result["timestamp"] =
-
-		message.Timestamp
-
-	result["body"] =
-
-		message.Body
+	result["body"] = message.Body
 
 	return result
 }

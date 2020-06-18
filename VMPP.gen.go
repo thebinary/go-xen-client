@@ -39,33 +39,19 @@ type VMPP struct {
 func FromVMPPToXml(VMPP *VMPP) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VMPP.Uuid
 
-		VMPP.Uuid
+	result["name_label"] = VMPP.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = VMPP.NameDescription
 
-		VMPP.NameLabel
+	result["is_policy_enabled"] = VMPP.IsPolicyEnabled
 
-	result["name_description"] =
+	result["backup_type"] = VMPP.BackupType.String()
 
-		VMPP.NameDescription
+	result["backup_retention_value"] = strconv.Itoa(VMPP.BackupRetentionValue)
 
-	result["is_policy_enabled"] =
-
-		VMPP.IsPolicyEnabled
-
-	result["backup_type"] =
-
-		VMPP.BackupType.String()
-
-	result["backup_retention_value"] =
-
-		strconv.Itoa(VMPP.BackupRetentionValue)
-
-	result["backup_frequency"] =
-
-		VMPP.BackupFrequency.String()
+	result["backup_frequency"] = VMPP.BackupFrequency.String()
 
 	backup_schedule := make(xmlrpc.Struct)
 	for key, value := range VMPP.BackupSchedule {
@@ -73,17 +59,11 @@ func FromVMPPToXml(VMPP *VMPP) (result xmlrpc.Struct) {
 	}
 	result["backup_schedule"] = backup_schedule
 
-	result["is_backup_running"] =
+	result["is_backup_running"] = VMPP.IsBackupRunning
 
-		VMPP.IsBackupRunning
+	result["backup_last_run_time"] = VMPP.BackupLastRunTime
 
-	result["backup_last_run_time"] =
-
-		VMPP.BackupLastRunTime
-
-	result["archive_target_type"] =
-
-		VMPP.ArchiveTargetType.String()
+	result["archive_target_type"] = VMPP.ArchiveTargetType.String()
 
 	archive_target_config := make(xmlrpc.Struct)
 	for key, value := range VMPP.ArchiveTargetConfig {
@@ -91,9 +71,7 @@ func FromVMPPToXml(VMPP *VMPP) (result xmlrpc.Struct) {
 	}
 	result["archive_target_config"] = archive_target_config
 
-	result["archive_frequency"] =
-
-		VMPP.ArchiveFrequency.String()
+	result["archive_frequency"] = VMPP.ArchiveFrequency.String()
 
 	archive_schedule := make(xmlrpc.Struct)
 	for key, value := range VMPP.ArchiveSchedule {
@@ -101,21 +79,13 @@ func FromVMPPToXml(VMPP *VMPP) (result xmlrpc.Struct) {
 	}
 	result["archive_schedule"] = archive_schedule
 
-	result["is_archive_running"] =
+	result["is_archive_running"] = VMPP.IsArchiveRunning
 
-		VMPP.IsArchiveRunning
+	result["archive_last_run_time"] = VMPP.ArchiveLastRunTime
 
-	result["archive_last_run_time"] =
+	result["VMs"] = VMPP.VMs
 
-		VMPP.ArchiveLastRunTime
-
-	result["VMs"] =
-
-		VMPP.VMs
-
-	result["is_alarm_enabled"] =
-
-		VMPP.IsAlarmEnabled
+	result["is_alarm_enabled"] = VMPP.IsAlarmEnabled
 
 	alarm_config := make(xmlrpc.Struct)
 	for key, value := range VMPP.AlarmConfig {
@@ -123,9 +93,7 @@ func FromVMPPToXml(VMPP *VMPP) (result xmlrpc.Struct) {
 	}
 	result["alarm_config"] = alarm_config
 
-	result["recent_alerts"] =
-
-		VMPP.RecentAlerts
+	result["recent_alerts"] = VMPP.RecentAlerts
 
 	return result
 }

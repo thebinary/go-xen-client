@@ -21,17 +21,11 @@ type Crashdump struct {
 func FromCrashdumpToXml(crashdump *Crashdump) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = crashdump.Uuid
 
-		crashdump.Uuid
+	result["VM"] = crashdump.VM
 
-	result["VM"] =
-
-		crashdump.VM
-
-	result["VDI"] =
-
-		crashdump.VDI
+	result["VDI"] = crashdump.VDI
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range crashdump.OtherConfig {

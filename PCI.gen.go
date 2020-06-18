@@ -28,33 +28,19 @@ type PCI struct {
 func FromPCIToXml(PCI *PCI) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PCI.Uuid
 
-		PCI.Uuid
+	result["class_name"] = PCI.ClassName
 
-	result["class_name"] =
+	result["vendor_name"] = PCI.VendorName
 
-		PCI.ClassName
+	result["device_name"] = PCI.DeviceName
 
-	result["vendor_name"] =
+	result["host"] = PCI.Host
 
-		PCI.VendorName
+	result["pci_id"] = PCI.PciId
 
-	result["device_name"] =
-
-		PCI.DeviceName
-
-	result["host"] =
-
-		PCI.Host
-
-	result["pci_id"] =
-
-		PCI.PciId
-
-	result["dependencies"] =
-
-		PCI.Dependencies
+	result["dependencies"] = PCI.Dependencies
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range PCI.OtherConfig {
@@ -62,17 +48,11 @@ func FromPCIToXml(PCI *PCI) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["subsystem_vendor_name"] =
+	result["subsystem_vendor_name"] = PCI.SubsystemVendorName
 
-		PCI.SubsystemVendorName
+	result["subsystem_device_name"] = PCI.SubsystemDeviceName
 
-	result["subsystem_device_name"] =
-
-		PCI.SubsystemDeviceName
-
-	result["driver_name"] =
-
-		PCI.DriverName
+	result["driver_name"] = PCI.DriverName
 
 	return result
 }

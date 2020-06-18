@@ -30,53 +30,29 @@ type PUSB struct {
 func FromPUSBToXml(PUSB *PUSB) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PUSB.Uuid
 
-		PUSB.Uuid
+	result["USB_group"] = PUSB.USBGroup
 
-	result["USB_group"] =
+	result["host"] = PUSB.Host
 
-		PUSB.USBGroup
+	result["path"] = PUSB.Path
 
-	result["host"] =
+	result["vendor_id"] = PUSB.VendorId
 
-		PUSB.Host
+	result["vendor_desc"] = PUSB.VendorDesc
 
-	result["path"] =
+	result["product_id"] = PUSB.ProductId
 
-		PUSB.Path
+	result["product_desc"] = PUSB.ProductDesc
 
-	result["vendor_id"] =
+	result["serial"] = PUSB.Serial
 
-		PUSB.VendorId
+	result["version"] = PUSB.Version
 
-	result["vendor_desc"] =
+	result["description"] = PUSB.Description
 
-		PUSB.VendorDesc
-
-	result["product_id"] =
-
-		PUSB.ProductId
-
-	result["product_desc"] =
-
-		PUSB.ProductDesc
-
-	result["serial"] =
-
-		PUSB.Serial
-
-	result["version"] =
-
-		PUSB.Version
-
-	result["description"] =
-
-		PUSB.Description
-
-	result["passthrough_enabled"] =
-
-		PUSB.PassthroughEnabled
+	result["passthrough_enabled"] = PUSB.PassthroughEnabled
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range PUSB.OtherConfig {

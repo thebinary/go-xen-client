@@ -23,21 +23,13 @@ type VMAppliance struct {
 func FromVMApplianceToXml(VM_appliance *VMAppliance) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VM_appliance.Uuid
 
-		VM_appliance.Uuid
+	result["name_label"] = VM_appliance.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = VM_appliance.NameDescription
 
-		VM_appliance.NameLabel
-
-	result["name_description"] =
-
-		VM_appliance.NameDescription
-
-	result["allowed_operations"] =
-
-		VM_appliance.AllowedOperations
+	result["allowed_operations"] = VM_appliance.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range VM_appliance.CurrentOperations {
@@ -45,9 +37,7 @@ func FromVMApplianceToXml(VM_appliance *VMAppliance) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["VMs"] =
-
-		VM_appliance.VMs
+	result["VMs"] = VM_appliance.VMs
 
 	return result
 }

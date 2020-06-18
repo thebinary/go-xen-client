@@ -24,29 +24,17 @@ type PVSCacheStorage struct {
 func FromPVSCacheStorageToXml(PVS_cache_storage *PVSCacheStorage) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PVS_cache_storage.Uuid
 
-		PVS_cache_storage.Uuid
+	result["host"] = PVS_cache_storage.Host
 
-	result["host"] =
+	result["SR"] = PVS_cache_storage.SR
 
-		PVS_cache_storage.Host
+	result["site"] = PVS_cache_storage.Site
 
-	result["SR"] =
+	result["size"] = strconv.Itoa(PVS_cache_storage.Size)
 
-		PVS_cache_storage.SR
-
-	result["site"] =
-
-		PVS_cache_storage.Site
-
-	result["size"] =
-
-		strconv.Itoa(PVS_cache_storage.Size)
-
-	result["VDI"] =
-
-		PVS_cache_storage.VDI
+	result["VDI"] = PVS_cache_storage.VDI
 
 	return result
 }

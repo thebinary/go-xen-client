@@ -40,13 +40,9 @@ type VBD struct {
 func FromVBDToXml(VBD *VBD) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VBD.Uuid
 
-		VBD.Uuid
-
-	result["allowed_operations"] =
-
-		VBD.AllowedOperations
+	result["allowed_operations"] = VBD.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range VBD.CurrentOperations {
@@ -54,45 +50,25 @@ func FromVBDToXml(VBD *VBD) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["VM"] =
+	result["VM"] = VBD.VM
 
-		VBD.VM
+	result["VDI"] = VBD.VDI
 
-	result["VDI"] =
+	result["device"] = VBD.Device
 
-		VBD.VDI
+	result["userdevice"] = VBD.Userdevice
 
-	result["device"] =
+	result["bootable"] = VBD.Bootable
 
-		VBD.Device
+	result["mode"] = VBD.Mode.String()
 
-	result["userdevice"] =
+	result["type"] = VBD.Type.String()
 
-		VBD.Userdevice
+	result["unpluggable"] = VBD.Unpluggable
 
-	result["bootable"] =
+	result["storage_lock"] = VBD.StorageLock
 
-		VBD.Bootable
-
-	result["mode"] =
-
-		VBD.Mode.String()
-
-	result["type"] =
-
-		VBD.Type.String()
-
-	result["unpluggable"] =
-
-		VBD.Unpluggable
-
-	result["storage_lock"] =
-
-		VBD.StorageLock
-
-	result["empty"] =
-
-		VBD.Empty
+	result["empty"] = VBD.Empty
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VBD.OtherConfig {
@@ -100,17 +76,11 @@ func FromVBDToXml(VBD *VBD) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["currently_attached"] =
+	result["currently_attached"] = VBD.CurrentlyAttached
 
-		VBD.CurrentlyAttached
+	result["status_code"] = strconv.Itoa(VBD.StatusCode)
 
-	result["status_code"] =
-
-		strconv.Itoa(VBD.StatusCode)
-
-	result["status_detail"] =
-
-		VBD.StatusDetail
+	result["status_detail"] = VBD.StatusDetail
 
 	runtime_properties := make(xmlrpc.Struct)
 	for key, value := range VBD.RuntimeProperties {
@@ -118,9 +88,7 @@ func FromVBDToXml(VBD *VBD) (result xmlrpc.Struct) {
 	}
 	result["runtime_properties"] = runtime_properties
 
-	result["qos_algorithm_type"] =
-
-		VBD.QosAlgorithmType
+	result["qos_algorithm_type"] = VBD.QosAlgorithmType
 
 	qos_algorithm_params := make(xmlrpc.Struct)
 	for key, value := range VBD.QosAlgorithmParams {
@@ -128,13 +96,9 @@ func FromVBDToXml(VBD *VBD) (result xmlrpc.Struct) {
 	}
 	result["qos_algorithm_params"] = qos_algorithm_params
 
-	result["qos_supported_algorithms"] =
+	result["qos_supported_algorithms"] = VBD.QosSupportedAlgorithms
 
-		VBD.QosSupportedAlgorithms
-
-	result["metrics"] =
-
-		VBD.Metrics
+	result["metrics"] = VBD.Metrics
 
 	return result
 }

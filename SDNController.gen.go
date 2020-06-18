@@ -22,21 +22,13 @@ type SDNController struct {
 func FromSDNControllerToXml(SDN_controller *SDNController) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = SDN_controller.Uuid
 
-		SDN_controller.Uuid
+	result["protocol"] = SDN_controller.Protocol.String()
 
-	result["protocol"] =
+	result["address"] = SDN_controller.Address
 
-		SDN_controller.Protocol.String()
-
-	result["address"] =
-
-		SDN_controller.Address
-
-	result["port"] =
-
-		strconv.Itoa(SDN_controller.Port)
+	result["port"] = strconv.Itoa(SDN_controller.Port)
 
 	return result
 }

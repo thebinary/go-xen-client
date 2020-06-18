@@ -24,33 +24,19 @@ type Feature struct {
 func FromFeatureToXml(Feature *Feature) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = Feature.Uuid
 
-		Feature.Uuid
+	result["name_label"] = Feature.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = Feature.NameDescription
 
-		Feature.NameLabel
+	result["enabled"] = Feature.Enabled
 
-	result["name_description"] =
+	result["experimental"] = Feature.Experimental
 
-		Feature.NameDescription
+	result["version"] = Feature.Version
 
-	result["enabled"] =
-
-		Feature.Enabled
-
-	result["experimental"] =
-
-		Feature.Experimental
-
-	result["version"] =
-
-		Feature.Version
-
-	result["host"] =
-
-		Feature.Host
+	result["host"] = Feature.Host
 
 	return result
 }

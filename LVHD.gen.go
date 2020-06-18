@@ -18,9 +18,7 @@ type LVHD struct {
 func FromLVHDToXml(LVHD *LVHD) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
-
-		LVHD.Uuid
+	result["uuid"] = LVHD.Uuid
 
 	return result
 }

@@ -78,25 +78,15 @@ type Host struct {
 func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = host.Uuid
 
-		host.Uuid
+	result["name_label"] = host.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = host.NameDescription
 
-		host.NameLabel
+	result["memory_overhead"] = strconv.Itoa(host.MemoryOverhead)
 
-	result["name_description"] =
-
-		host.NameDescription
-
-	result["memory_overhead"] =
-
-		strconv.Itoa(host.MemoryOverhead)
-
-	result["allowed_operations"] =
-
-		host.AllowedOperations
+	result["allowed_operations"] = host.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range host.CurrentOperations {
@@ -104,17 +94,11 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["API_version_major"] =
+	result["API_version_major"] = strconv.Itoa(host.APIVersionMajor)
 
-		strconv.Itoa(host.APIVersionMajor)
+	result["API_version_minor"] = strconv.Itoa(host.APIVersionMinor)
 
-	result["API_version_minor"] =
-
-		strconv.Itoa(host.APIVersionMinor)
-
-	result["API_version_vendor"] =
-
-		host.APIVersionVendor
+	result["API_version_vendor"] = host.APIVersionVendor
 
 	API_version_vendor_implementation := make(xmlrpc.Struct)
 	for key, value := range host.APIVersionVendorImplementation {
@@ -122,9 +106,7 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["API_version_vendor_implementation"] = API_version_vendor_implementation
 
-	result["enabled"] =
-
-		host.Enabled
+	result["enabled"] = host.Enabled
 
 	software_version := make(xmlrpc.Struct)
 	for key, value := range host.SoftwareVersion {
@@ -138,9 +120,7 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["capabilities"] =
-
-		host.Capabilities
+	result["capabilities"] = host.Capabilities
 
 	cpu_configuration := make(xmlrpc.Struct)
 	for key, value := range host.CpuConfiguration {
@@ -148,17 +128,11 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["cpu_configuration"] = cpu_configuration
 
-	result["sched_policy"] =
+	result["sched_policy"] = host.SchedPolicy
 
-		host.SchedPolicy
+	result["supported_bootloaders"] = host.SupportedBootloaders
 
-	result["supported_bootloaders"] =
-
-		host.SupportedBootloaders
-
-	result["resident_VMs"] =
-
-		host.ResidentVMs
+	result["resident_VMs"] = host.ResidentVMs
 
 	logging := make(xmlrpc.Struct)
 	for key, value := range host.Logging {
@@ -166,37 +140,21 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["logging"] = logging
 
-	result["PIFs"] =
+	result["PIFs"] = host.PIFs
 
-		host.PIFs
+	result["suspend_image_sr"] = host.SuspendImageSr
 
-	result["suspend_image_sr"] =
+	result["crash_dump_sr"] = host.CrashDumpSr
 
-		host.SuspendImageSr
+	result["crashdumps"] = host.Crashdumps
 
-	result["crash_dump_sr"] =
+	result["patches"] = host.Patches
 
-		host.CrashDumpSr
+	result["updates"] = host.Updates
 
-	result["crashdumps"] =
+	result["PBDs"] = host.PBDs
 
-		host.Crashdumps
-
-	result["patches"] =
-
-		host.Patches
-
-	result["updates"] =
-
-		host.Updates
-
-	result["PBDs"] =
-
-		host.PBDs
-
-	result["host_CPUs"] =
-
-		host.HostCPUs
+	result["host_CPUs"] = host.HostCPUs
 
 	cpu_info := make(xmlrpc.Struct)
 	for key, value := range host.CpuInfo {
@@ -204,17 +162,11 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["cpu_info"] = cpu_info
 
-	result["hostname"] =
+	result["hostname"] = host.Hostname
 
-		host.Hostname
+	result["address"] = host.Address
 
-	result["address"] =
-
-		host.Address
-
-	result["metrics"] =
-
-		host.Metrics
+	result["metrics"] = host.Metrics
 
 	license_params := make(xmlrpc.Struct)
 	for key, value := range host.LicenseParams {
@@ -222,13 +174,9 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["license_params"] = license_params
 
-	result["ha_statefiles"] =
+	result["ha_statefiles"] = host.HaStatefiles
 
-		host.HaStatefiles
-
-	result["ha_network_peers"] =
-
-		host.HaNetworkPeers
+	result["ha_network_peers"] = host.HaNetworkPeers
 
 	blobs := make(xmlrpc.Struct)
 	for key, value := range host.Blobs {
@@ -236,17 +184,11 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["blobs"] = blobs
 
-	result["tags"] =
+	result["tags"] = host.Tags
 
-		host.Tags
+	result["external_auth_type"] = host.ExternalAuthType
 
-	result["external_auth_type"] =
-
-		host.ExternalAuthType
-
-	result["external_auth_service_name"] =
-
-		host.ExternalAuthServiceName
+	result["external_auth_service_name"] = host.ExternalAuthServiceName
 
 	external_auth_configuration := make(xmlrpc.Struct)
 	for key, value := range host.ExternalAuthConfiguration {
@@ -254,9 +196,7 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["external_auth_configuration"] = external_auth_configuration
 
-	result["edition"] =
-
-		host.Edition
+	result["edition"] = host.Edition
 
 	license_server := make(xmlrpc.Struct)
 	for key, value := range host.LicenseServer {
@@ -270,9 +210,7 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["bios_strings"] = bios_strings
 
-	result["power_on_mode"] =
-
-		host.PowerOnMode
+	result["power_on_mode"] = host.PowerOnMode
 
 	power_on_config := make(xmlrpc.Struct)
 	for key, value := range host.PowerOnConfig {
@@ -280,9 +218,7 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["power_on_config"] = power_on_config
 
-	result["local_cache_sr"] =
-
-		host.LocalCacheSr
+	result["local_cache_sr"] = host.LocalCacheSr
 
 	chipset_info := make(xmlrpc.Struct)
 	for key, value := range host.ChipsetInfo {
@@ -290,21 +226,13 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["chipset_info"] = chipset_info
 
-	result["PCIs"] =
+	result["PCIs"] = host.PCIs
 
-		host.PCIs
+	result["PGPUs"] = host.PGPUs
 
-	result["PGPUs"] =
+	result["PUSBs"] = host.PUSBs
 
-		host.PGPUs
-
-	result["PUSBs"] =
-
-		host.PUSBs
-
-	result["ssl_legacy"] =
-
-		host.SslLegacy
+	result["ssl_legacy"] = host.SslLegacy
 
 	guest_VCPUs_params := make(xmlrpc.Struct)
 	for key, value := range host.GuestVCPUsParams {
@@ -312,37 +240,21 @@ func FromHostToXml(host *Host) (result xmlrpc.Struct) {
 	}
 	result["guest_VCPUs_params"] = guest_VCPUs_params
 
-	result["display"] =
+	result["display"] = host.Display.String()
 
-		host.Display.String()
+	result["virtual_hardware_platform_versions"] = host.VirtualHardwarePlatformVersions
 
-	result["virtual_hardware_platform_versions"] =
+	result["control_domain"] = host.ControlDomain
 
-		host.VirtualHardwarePlatformVersions
+	result["updates_requiring_reboot"] = host.UpdatesRequiringReboot
 
-	result["control_domain"] =
+	result["features"] = host.Features
 
-		host.ControlDomain
+	result["iscsi_iqn"] = host.IscsiIqn
 
-	result["updates_requiring_reboot"] =
+	result["multipathing"] = host.Multipathing
 
-		host.UpdatesRequiringReboot
-
-	result["features"] =
-
-		host.Features
-
-	result["iscsi_iqn"] =
-
-		host.IscsiIqn
-
-	result["multipathing"] =
-
-		host.Multipathing
-
-	result["uefi_certificates"] =
-
-		host.UefiCertificates
+	result["uefi_certificates"] = host.UefiCertificates
 
 	return result
 }

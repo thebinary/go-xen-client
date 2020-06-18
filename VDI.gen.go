@@ -51,21 +51,13 @@ type VDI struct {
 func FromVDIToXml(VDI *VDI) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VDI.Uuid
 
-		VDI.Uuid
+	result["name_label"] = VDI.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = VDI.NameDescription
 
-		VDI.NameLabel
-
-	result["name_description"] =
-
-		VDI.NameDescription
-
-	result["allowed_operations"] =
-
-		VDI.AllowedOperations
+	result["allowed_operations"] = VDI.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range VDI.CurrentOperations {
@@ -73,37 +65,21 @@ func FromVDIToXml(VDI *VDI) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["SR"] =
+	result["SR"] = VDI.SR
 
-		VDI.SR
+	result["VBDs"] = VDI.VBDs
 
-	result["VBDs"] =
+	result["crash_dumps"] = VDI.CrashDumps
 
-		VDI.VBDs
+	result["virtual_size"] = strconv.Itoa(VDI.VirtualSize)
 
-	result["crash_dumps"] =
+	result["physical_utilisation"] = strconv.Itoa(VDI.PhysicalUtilisation)
 
-		VDI.CrashDumps
+	result["type"] = VDI.Type.String()
 
-	result["virtual_size"] =
+	result["sharable"] = VDI.Sharable
 
-		strconv.Itoa(VDI.VirtualSize)
-
-	result["physical_utilisation"] =
-
-		strconv.Itoa(VDI.PhysicalUtilisation)
-
-	result["type"] =
-
-		VDI.Type.String()
-
-	result["sharable"] =
-
-		VDI.Sharable
-
-	result["read_only"] =
-
-		VDI.ReadOnly
+	result["read_only"] = VDI.ReadOnly
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VDI.OtherConfig {
@@ -111,25 +87,15 @@ func FromVDIToXml(VDI *VDI) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["storage_lock"] =
+	result["storage_lock"] = VDI.StorageLock
 
-		VDI.StorageLock
+	result["location"] = VDI.Location
 
-	result["location"] =
+	result["managed"] = VDI.Managed
 
-		VDI.Location
+	result["missing"] = VDI.Missing
 
-	result["managed"] =
-
-		VDI.Managed
-
-	result["missing"] =
-
-		VDI.Missing
-
-	result["parent"] =
-
-		VDI.Parent
+	result["parent"] = VDI.Parent
 
 	xenstore_data := make(xmlrpc.Struct)
 	for key, value := range VDI.XenstoreData {
@@ -143,49 +109,27 @@ func FromVDIToXml(VDI *VDI) (result xmlrpc.Struct) {
 	}
 	result["sm_config"] = sm_config
 
-	result["is_a_snapshot"] =
+	result["is_a_snapshot"] = VDI.IsASnapshot
 
-		VDI.IsASnapshot
+	result["snapshot_of"] = VDI.SnapshotOf
 
-	result["snapshot_of"] =
+	result["snapshots"] = VDI.Snapshots
 
-		VDI.SnapshotOf
+	result["snapshot_time"] = VDI.SnapshotTime
 
-	result["snapshots"] =
+	result["tags"] = VDI.Tags
 
-		VDI.Snapshots
+	result["allow_caching"] = VDI.AllowCaching
 
-	result["snapshot_time"] =
+	result["on_boot"] = VDI.OnBoot.String()
 
-		VDI.SnapshotTime
+	result["metadata_of_pool"] = VDI.MetadataOfPool
 
-	result["tags"] =
+	result["metadata_latest"] = VDI.MetadataLatest
 
-		VDI.Tags
+	result["is_tools_iso"] = VDI.IsToolsIso
 
-	result["allow_caching"] =
-
-		VDI.AllowCaching
-
-	result["on_boot"] =
-
-		VDI.OnBoot.String()
-
-	result["metadata_of_pool"] =
-
-		VDI.MetadataOfPool
-
-	result["metadata_latest"] =
-
-		VDI.MetadataLatest
-
-	result["is_tools_iso"] =
-
-		VDI.IsToolsIso
-
-	result["cbt_enabled"] =
-
-		VDI.CbtEnabled
+	result["cbt_enabled"] = VDI.CbtEnabled
 
 	return result
 }

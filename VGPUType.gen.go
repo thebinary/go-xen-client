@@ -34,69 +34,37 @@ type VGPUType struct {
 func FromVGPUTypeToXml(VGPU_type *VGPUType) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VGPU_type.Uuid
 
-		VGPU_type.Uuid
+	result["vendor_name"] = VGPU_type.VendorName
 
-	result["vendor_name"] =
+	result["model_name"] = VGPU_type.ModelName
 
-		VGPU_type.VendorName
+	result["framebuffer_size"] = strconv.Itoa(VGPU_type.FramebufferSize)
 
-	result["model_name"] =
+	result["max_heads"] = strconv.Itoa(VGPU_type.MaxHeads)
 
-		VGPU_type.ModelName
+	result["max_resolution_x"] = strconv.Itoa(VGPU_type.MaxResolutionX)
 
-	result["framebuffer_size"] =
+	result["max_resolution_y"] = strconv.Itoa(VGPU_type.MaxResolutionY)
 
-		strconv.Itoa(VGPU_type.FramebufferSize)
+	result["supported_on_PGPUs"] = VGPU_type.SupportedOnPGPUs
 
-	result["max_heads"] =
+	result["enabled_on_PGPUs"] = VGPU_type.EnabledOnPGPUs
 
-		strconv.Itoa(VGPU_type.MaxHeads)
+	result["VGPUs"] = VGPU_type.VGPUs
 
-	result["max_resolution_x"] =
+	result["supported_on_GPU_groups"] = VGPU_type.SupportedOnGPUGroups
 
-		strconv.Itoa(VGPU_type.MaxResolutionX)
+	result["enabled_on_GPU_groups"] = VGPU_type.EnabledOnGPUGroups
 
-	result["max_resolution_y"] =
+	result["implementation"] = VGPU_type.Implementation.String()
 
-		strconv.Itoa(VGPU_type.MaxResolutionY)
+	result["identifier"] = VGPU_type.Identifier
 
-	result["supported_on_PGPUs"] =
+	result["experimental"] = VGPU_type.Experimental
 
-		VGPU_type.SupportedOnPGPUs
-
-	result["enabled_on_PGPUs"] =
-
-		VGPU_type.EnabledOnPGPUs
-
-	result["VGPUs"] =
-
-		VGPU_type.VGPUs
-
-	result["supported_on_GPU_groups"] =
-
-		VGPU_type.SupportedOnGPUGroups
-
-	result["enabled_on_GPU_groups"] =
-
-		VGPU_type.EnabledOnGPUGroups
-
-	result["implementation"] =
-
-		VGPU_type.Implementation.String()
-
-	result["identifier"] =
-
-		VGPU_type.Identifier
-
-	result["experimental"] =
-
-		VGPU_type.Experimental
-
-	result["compatible_types_in_vm"] =
-
-		VGPU_type.CompatibleTypesInVm
+	result["compatible_types_in_vm"] = VGPU_type.CompatibleTypesInVm
 
 	return result
 }

@@ -36,17 +36,11 @@ type VMMetrics struct {
 func FromVMMetricsToXml(VM_metrics *VMMetrics) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VM_metrics.Uuid
 
-		VM_metrics.Uuid
+	result["memory_actual"] = strconv.Itoa(VM_metrics.MemoryActual)
 
-	result["memory_actual"] =
-
-		strconv.Itoa(VM_metrics.MemoryActual)
-
-	result["VCPUs_number"] =
-
-		strconv.Itoa(VM_metrics.VCPUsNumber)
+	result["VCPUs_number"] = strconv.Itoa(VM_metrics.VCPUsNumber)
 
 	VCPUs_utilisation := make(xmlrpc.Struct)
 	for key, value := range VM_metrics.VCPUsUtilisation {
@@ -72,21 +66,13 @@ func FromVMMetricsToXml(VM_metrics *VMMetrics) (result xmlrpc.Struct) {
 	}
 	result["VCPUs_flags"] = VCPUs_flags
 
-	result["state"] =
+	result["state"] = VM_metrics.State
 
-		VM_metrics.State
+	result["start_time"] = VM_metrics.StartTime
 
-	result["start_time"] =
+	result["install_time"] = VM_metrics.InstallTime
 
-		VM_metrics.StartTime
-
-	result["install_time"] =
-
-		VM_metrics.InstallTime
-
-	result["last_updated"] =
-
-		VM_metrics.LastUpdated
+	result["last_updated"] = VM_metrics.LastUpdated
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VM_metrics.OtherConfig {
@@ -94,21 +80,13 @@ func FromVMMetricsToXml(VM_metrics *VMMetrics) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["hvm"] =
+	result["hvm"] = VM_metrics.Hvm
 
-		VM_metrics.Hvm
+	result["nested_virt"] = VM_metrics.NestedVirt
 
-	result["nested_virt"] =
+	result["nomigrate"] = VM_metrics.Nomigrate
 
-		VM_metrics.NestedVirt
-
-	result["nomigrate"] =
-
-		VM_metrics.Nomigrate
-
-	result["current_domain_type"] =
-
-		VM_metrics.CurrentDomainType.String()
+	result["current_domain_type"] = VM_metrics.CurrentDomainType.String()
 
 	return result
 }

@@ -26,33 +26,19 @@ type ClusterHost struct {
 func FromClusterHostToXml(Cluster_host *ClusterHost) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = Cluster_host.Uuid
 
-		Cluster_host.Uuid
+	result["cluster"] = Cluster_host.Cluster
 
-	result["cluster"] =
+	result["host"] = Cluster_host.Host
 
-		Cluster_host.Cluster
+	result["enabled"] = Cluster_host.Enabled
 
-	result["host"] =
+	result["PIF"] = Cluster_host.PIF
 
-		Cluster_host.Host
+	result["joined"] = Cluster_host.Joined
 
-	result["enabled"] =
-
-		Cluster_host.Enabled
-
-	result["PIF"] =
-
-		Cluster_host.PIF
-
-	result["joined"] =
-
-		Cluster_host.Joined
-
-	result["allowed_operations"] =
-
-		Cluster_host.AllowedOperations
+	result["allowed_operations"] = Cluster_host.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range Cluster_host.CurrentOperations {

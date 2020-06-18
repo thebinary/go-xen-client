@@ -20,17 +20,11 @@ type VTPM struct {
 func FromVTPMToXml(VTPM *VTPM) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VTPM.Uuid
 
-		VTPM.Uuid
+	result["VM"] = VTPM.VM
 
-	result["VM"] =
-
-		VTPM.VM
-
-	result["backend"] =
-
-		VTPM.Backend
+	result["backend"] = VTPM.Backend
 
 	return result
 }

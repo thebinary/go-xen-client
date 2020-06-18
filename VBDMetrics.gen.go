@@ -23,21 +23,13 @@ type VBDMetrics struct {
 func FromVBDMetricsToXml(VBD_metrics *VBDMetrics) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VBD_metrics.Uuid
 
-		VBD_metrics.Uuid
+	result["io_read_kbs"] = VBD_metrics.IoReadKbs
 
-	result["io_read_kbs"] =
+	result["io_write_kbs"] = VBD_metrics.IoWriteKbs
 
-		VBD_metrics.IoReadKbs
-
-	result["io_write_kbs"] =
-
-		VBD_metrics.IoWriteKbs
-
-	result["last_updated"] =
-
-		VBD_metrics.LastUpdated
+	result["last_updated"] = VBD_metrics.LastUpdated
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VBD_metrics.OtherConfig {

@@ -53,85 +53,45 @@ type PIF struct {
 func FromPIFToXml(PIF *PIF) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PIF.Uuid
 
-		PIF.Uuid
+	result["device"] = PIF.Device
 
-	result["device"] =
+	result["network"] = PIF.Network
 
-		PIF.Device
+	result["host"] = PIF.Host
 
-	result["network"] =
+	result["MAC"] = PIF.MAC
 
-		PIF.Network
+	result["MTU"] = strconv.Itoa(PIF.MTU)
 
-	result["host"] =
+	result["VLAN"] = strconv.Itoa(PIF.VLAN)
 
-		PIF.Host
+	result["metrics"] = PIF.Metrics
 
-	result["MAC"] =
+	result["physical"] = PIF.Physical
 
-		PIF.MAC
+	result["currently_attached"] = PIF.CurrentlyAttached
 
-	result["MTU"] =
+	result["ip_configuration_mode"] = PIF.IpConfigurationMode.String()
 
-		strconv.Itoa(PIF.MTU)
+	result["IP"] = PIF.IP
 
-	result["VLAN"] =
+	result["netmask"] = PIF.Netmask
 
-		strconv.Itoa(PIF.VLAN)
+	result["gateway"] = PIF.Gateway
 
-	result["metrics"] =
+	result["DNS"] = PIF.DNS
 
-		PIF.Metrics
+	result["bond_slave_of"] = PIF.BondSlaveOf
 
-	result["physical"] =
+	result["bond_master_of"] = PIF.BondMasterOf
 
-		PIF.Physical
+	result["VLAN_master_of"] = PIF.VLANMasterOf
 
-	result["currently_attached"] =
+	result["VLAN_slave_of"] = PIF.VLANSlaveOf
 
-		PIF.CurrentlyAttached
-
-	result["ip_configuration_mode"] =
-
-		PIF.IpConfigurationMode.String()
-
-	result["IP"] =
-
-		PIF.IP
-
-	result["netmask"] =
-
-		PIF.Netmask
-
-	result["gateway"] =
-
-		PIF.Gateway
-
-	result["DNS"] =
-
-		PIF.DNS
-
-	result["bond_slave_of"] =
-
-		PIF.BondSlaveOf
-
-	result["bond_master_of"] =
-
-		PIF.BondMasterOf
-
-	result["VLAN_master_of"] =
-
-		PIF.VLANMasterOf
-
-	result["VLAN_slave_of"] =
-
-		PIF.VLANSlaveOf
-
-	result["management"] =
-
-		PIF.Management
+	result["management"] = PIF.Management
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range PIF.OtherConfig {
@@ -139,37 +99,21 @@ func FromPIFToXml(PIF *PIF) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["disallow_unplug"] =
+	result["disallow_unplug"] = PIF.DisallowUnplug
 
-		PIF.DisallowUnplug
+	result["tunnel_access_PIF_of"] = PIF.TunnelAccessPIFOf
 
-	result["tunnel_access_PIF_of"] =
+	result["tunnel_transport_PIF_of"] = PIF.TunnelTransportPIFOf
 
-		PIF.TunnelAccessPIFOf
+	result["ipv6_configuration_mode"] = PIF.Ipv6ConfigurationMode.String()
 
-	result["tunnel_transport_PIF_of"] =
+	result["IPv6"] = PIF.IPv6
 
-		PIF.TunnelTransportPIFOf
+	result["ipv6_gateway"] = PIF.Ipv6Gateway
 
-	result["ipv6_configuration_mode"] =
+	result["primary_address_type"] = PIF.PrimaryAddressType.String()
 
-		PIF.Ipv6ConfigurationMode.String()
-
-	result["IPv6"] =
-
-		PIF.IPv6
-
-	result["ipv6_gateway"] =
-
-		PIF.Ipv6Gateway
-
-	result["primary_address_type"] =
-
-		PIF.PrimaryAddressType.String()
-
-	result["managed"] =
-
-		PIF.Managed
+	result["managed"] = PIF.Managed
 
 	properties := make(xmlrpc.Struct)
 	for key, value := range PIF.Properties {
@@ -177,25 +121,15 @@ func FromPIFToXml(PIF *PIF) (result xmlrpc.Struct) {
 	}
 	result["properties"] = properties
 
-	result["capabilities"] =
+	result["capabilities"] = PIF.Capabilities
 
-		PIF.Capabilities
+	result["igmp_snooping_status"] = PIF.IgmpSnoopingStatus.String()
 
-	result["igmp_snooping_status"] =
+	result["sriov_physical_PIF_of"] = PIF.SriovPhysicalPIFOf
 
-		PIF.IgmpSnoopingStatus.String()
+	result["sriov_logical_PIF_of"] = PIF.SriovLogicalPIFOf
 
-	result["sriov_physical_PIF_of"] =
-
-		PIF.SriovPhysicalPIFOf
-
-	result["sriov_logical_PIF_of"] =
-
-		PIF.SriovLogicalPIFOf
-
-	result["PCI"] =
-
-		PIF.PCI
+	result["PCI"] = PIF.PCI
 
 	return result
 }

@@ -23,25 +23,15 @@ type PVSServer struct {
 func FromPVSServerToXml(PVS_server *PVSServer) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PVS_server.Uuid
 
-		PVS_server.Uuid
+	result["addresses"] = PVS_server.Addresses
 
-	result["addresses"] =
+	result["first_port"] = strconv.Itoa(PVS_server.FirstPort)
 
-		PVS_server.Addresses
+	result["last_port"] = strconv.Itoa(PVS_server.LastPort)
 
-	result["first_port"] =
-
-		strconv.Itoa(PVS_server.FirstPort)
-
-	result["last_port"] =
-
-		strconv.Itoa(PVS_server.LastPort)
-
-	result["site"] =
-
-		PVS_server.Site
+	result["site"] = PVS_server.Site
 
 	return result
 }

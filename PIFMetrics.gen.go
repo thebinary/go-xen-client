@@ -32,53 +32,29 @@ type PIFMetrics struct {
 func FromPIFMetricsToXml(PIF_metrics *PIFMetrics) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PIF_metrics.Uuid
 
-		PIF_metrics.Uuid
+	result["io_read_kbs"] = PIF_metrics.IoReadKbs
 
-	result["io_read_kbs"] =
+	result["io_write_kbs"] = PIF_metrics.IoWriteKbs
 
-		PIF_metrics.IoReadKbs
+	result["carrier"] = PIF_metrics.Carrier
 
-	result["io_write_kbs"] =
+	result["vendor_id"] = PIF_metrics.VendorId
 
-		PIF_metrics.IoWriteKbs
+	result["vendor_name"] = PIF_metrics.VendorName
 
-	result["carrier"] =
+	result["device_id"] = PIF_metrics.DeviceId
 
-		PIF_metrics.Carrier
+	result["device_name"] = PIF_metrics.DeviceName
 
-	result["vendor_id"] =
+	result["speed"] = strconv.Itoa(PIF_metrics.Speed)
 
-		PIF_metrics.VendorId
+	result["duplex"] = PIF_metrics.Duplex
 
-	result["vendor_name"] =
+	result["pci_bus_path"] = PIF_metrics.PciBusPath
 
-		PIF_metrics.VendorName
-
-	result["device_id"] =
-
-		PIF_metrics.DeviceId
-
-	result["device_name"] =
-
-		PIF_metrics.DeviceName
-
-	result["speed"] =
-
-		strconv.Itoa(PIF_metrics.Speed)
-
-	result["duplex"] =
-
-		PIF_metrics.Duplex
-
-	result["pci_bus_path"] =
-
-		PIF_metrics.PciBusPath
-
-	result["last_updated"] =
-
-		PIF_metrics.LastUpdated
+	result["last_updated"] = PIF_metrics.LastUpdated
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range PIF_metrics.OtherConfig {

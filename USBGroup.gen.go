@@ -23,25 +23,15 @@ type USBGroup struct {
 func FromUSBGroupToXml(USB_group *USBGroup) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = USB_group.Uuid
 
-		USB_group.Uuid
+	result["name_label"] = USB_group.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = USB_group.NameDescription
 
-		USB_group.NameLabel
+	result["PUSBs"] = USB_group.PUSBs
 
-	result["name_description"] =
-
-		USB_group.NameDescription
-
-	result["PUSBs"] =
-
-		USB_group.PUSBs
-
-	result["VUSBs"] =
-
-		USB_group.VUSBs
+	result["VUSBs"] = USB_group.VUSBs
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range USB_group.OtherConfig {

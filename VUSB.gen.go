@@ -24,13 +24,9 @@ type VUSB struct {
 func FromVUSBToXml(VUSB *VUSB) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VUSB.Uuid
 
-		VUSB.Uuid
-
-	result["allowed_operations"] =
-
-		VUSB.AllowedOperations
+	result["allowed_operations"] = VUSB.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range VUSB.CurrentOperations {
@@ -38,13 +34,9 @@ func FromVUSBToXml(VUSB *VUSB) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["VM"] =
+	result["VM"] = VUSB.VM
 
-		VUSB.VM
-
-	result["USB_group"] =
-
-		VUSB.USBGroup
+	result["USB_group"] = VUSB.USBGroup
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VUSB.OtherConfig {
@@ -52,9 +44,7 @@ func FromVUSBToXml(VUSB *VUSB) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["currently_attached"] =
-
-		VUSB.CurrentlyAttached
+	result["currently_attached"] = VUSB.CurrentlyAttached
 
 	return result
 }

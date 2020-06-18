@@ -21,21 +21,13 @@ type Role struct {
 func FromRoleToXml(role *Role) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = role.Uuid
 
-		role.Uuid
+	result["name_label"] = role.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = role.NameDescription
 
-		role.NameLabel
-
-	result["name_description"] =
-
-		role.NameDescription
-
-	result["subroles"] =
-
-		role.Subroles
+	result["subroles"] = role.Subroles
 
 	return result
 }

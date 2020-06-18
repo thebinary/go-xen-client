@@ -25,37 +25,21 @@ type DataSource struct {
 func FromDataSourceToXml(data_source *DataSource) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["name_label"] =
+	result["name_label"] = data_source.NameLabel
 
-		data_source.NameLabel
+	result["name_description"] = data_source.NameDescription
 
-	result["name_description"] =
+	result["enabled"] = data_source.Enabled
 
-		data_source.NameDescription
+	result["standard"] = data_source.Standard
 
-	result["enabled"] =
+	result["units"] = data_source.Units
 
-		data_source.Enabled
+	result["min"] = data_source.Min
 
-	result["standard"] =
+	result["max"] = data_source.Max
 
-		data_source.Standard
-
-	result["units"] =
-
-		data_source.Units
-
-	result["min"] =
-
-		data_source.Min
-
-	result["max"] =
-
-		data_source.Max
-
-	result["value"] =
-
-		data_source.Value
+	result["value"] = data_source.Value
 
 	return result
 }

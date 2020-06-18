@@ -26,17 +26,11 @@ type Bond struct {
 func FromBondToXml(Bond *Bond) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = Bond.Uuid
 
-		Bond.Uuid
+	result["master"] = Bond.Master
 
-	result["master"] =
-
-		Bond.Master
-
-	result["slaves"] =
-
-		Bond.Slaves
+	result["slaves"] = Bond.Slaves
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range Bond.OtherConfig {
@@ -44,13 +38,9 @@ func FromBondToXml(Bond *Bond) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["primary_slave"] =
+	result["primary_slave"] = Bond.PrimarySlave
 
-		Bond.PrimarySlave
-
-	result["mode"] =
-
-		Bond.Mode.String()
+	result["mode"] = Bond.Mode.String()
 
 	properties := make(xmlrpc.Struct)
 	for key, value := range Bond.Properties {
@@ -58,9 +48,7 @@ func FromBondToXml(Bond *Bond) (result xmlrpc.Struct) {
 	}
 	result["properties"] = properties
 
-	result["links_up"] =
-
-		strconv.Itoa(Bond.LinksUp)
+	result["links_up"] = strconv.Itoa(Bond.LinksUp)
 
 	return result
 }

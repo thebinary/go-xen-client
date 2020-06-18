@@ -20,13 +20,9 @@ type Secret struct {
 func FromSecretToXml(secret *Secret) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = secret.Uuid
 
-		secret.Uuid
-
-	result["value"] =
-
-		secret.Value
+	result["value"] = secret.Value
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range secret.OtherConfig {

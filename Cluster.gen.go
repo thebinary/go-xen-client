@@ -29,29 +29,17 @@ type Cluster struct {
 func FromClusterToXml(Cluster *Cluster) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = Cluster.Uuid
 
-		Cluster.Uuid
+	result["cluster_hosts"] = Cluster.ClusterHosts
 
-	result["cluster_hosts"] =
+	result["pending_forget"] = Cluster.PendingForget
 
-		Cluster.ClusterHosts
+	result["cluster_token"] = Cluster.ClusterToken
 
-	result["pending_forget"] =
+	result["cluster_stack"] = Cluster.ClusterStack
 
-		Cluster.PendingForget
-
-	result["cluster_token"] =
-
-		Cluster.ClusterToken
-
-	result["cluster_stack"] =
-
-		Cluster.ClusterStack
-
-	result["allowed_operations"] =
-
-		Cluster.AllowedOperations
+	result["allowed_operations"] = Cluster.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range Cluster.CurrentOperations {
@@ -59,17 +47,11 @@ func FromClusterToXml(Cluster *Cluster) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["pool_auto_join"] =
+	result["pool_auto_join"] = Cluster.PoolAutoJoin
 
-		Cluster.PoolAutoJoin
+	result["token_timeout"] = Cluster.TokenTimeout
 
-	result["token_timeout"] =
-
-		Cluster.TokenTimeout
-
-	result["token_timeout_coefficient"] =
-
-		Cluster.TokenTimeoutCoefficient
+	result["token_timeout_coefficient"] = Cluster.TokenTimeoutCoefficient
 
 	cluster_config := make(xmlrpc.Struct)
 	for key, value := range Cluster.ClusterConfig {

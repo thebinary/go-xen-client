@@ -105,13 +105,9 @@ type VM struct {
 func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VM.Uuid
 
-		VM.Uuid
-
-	result["allowed_operations"] =
-
-		VM.AllowedOperations
+	result["allowed_operations"] = VM.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range VM.CurrentOperations {
@@ -119,65 +115,35 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["power_state"] =
+	result["power_state"] = VM.PowerState.String()
 
-		VM.PowerState.String()
+	result["name_label"] = VM.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = VM.NameDescription
 
-		VM.NameLabel
+	result["user_version"] = strconv.Itoa(VM.UserVersion)
 
-	result["name_description"] =
+	result["is_a_template"] = VM.IsATemplate
 
-		VM.NameDescription
+	result["is_default_template"] = VM.IsDefaultTemplate
 
-	result["user_version"] =
+	result["suspend_VDI"] = VM.SuspendVDI
 
-		strconv.Itoa(VM.UserVersion)
+	result["resident_on"] = VM.ResidentOn
 
-	result["is_a_template"] =
+	result["affinity"] = VM.Affinity
 
-		VM.IsATemplate
+	result["memory_overhead"] = strconv.Itoa(VM.MemoryOverhead)
 
-	result["is_default_template"] =
+	result["memory_target"] = strconv.Itoa(VM.MemoryTarget)
 
-		VM.IsDefaultTemplate
+	result["memory_static_max"] = strconv.Itoa(VM.MemoryStaticMax)
 
-	result["suspend_VDI"] =
+	result["memory_dynamic_max"] = strconv.Itoa(VM.MemoryDynamicMax)
 
-		VM.SuspendVDI
+	result["memory_dynamic_min"] = strconv.Itoa(VM.MemoryDynamicMin)
 
-	result["resident_on"] =
-
-		VM.ResidentOn
-
-	result["affinity"] =
-
-		VM.Affinity
-
-	result["memory_overhead"] =
-
-		strconv.Itoa(VM.MemoryOverhead)
-
-	result["memory_target"] =
-
-		strconv.Itoa(VM.MemoryTarget)
-
-	result["memory_static_max"] =
-
-		strconv.Itoa(VM.MemoryStaticMax)
-
-	result["memory_dynamic_max"] =
-
-		strconv.Itoa(VM.MemoryDynamicMax)
-
-	result["memory_dynamic_min"] =
-
-		strconv.Itoa(VM.MemoryDynamicMin)
-
-	result["memory_static_min"] =
-
-		strconv.Itoa(VM.MemoryStaticMin)
+	result["memory_static_min"] = strconv.Itoa(VM.MemoryStaticMin)
 
 	VCPUs_params := make(xmlrpc.Struct)
 	for key, value := range VM.VCPUsParams {
@@ -185,77 +151,41 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["VCPUs_params"] = VCPUs_params
 
-	result["VCPUs_max"] =
+	result["VCPUs_max"] = strconv.Itoa(VM.VCPUsMax)
 
-		strconv.Itoa(VM.VCPUsMax)
+	result["VCPUs_at_startup"] = strconv.Itoa(VM.VCPUsAtStartup)
 
-	result["VCPUs_at_startup"] =
+	result["actions_after_shutdown"] = VM.ActionsAfterShutdown.String()
 
-		strconv.Itoa(VM.VCPUsAtStartup)
+	result["actions_after_reboot"] = VM.ActionsAfterReboot.String()
 
-	result["actions_after_shutdown"] =
+	result["actions_after_crash"] = VM.ActionsAfterCrash.String()
 
-		VM.ActionsAfterShutdown.String()
+	result["consoles"] = VM.Consoles
 
-	result["actions_after_reboot"] =
+	result["VIFs"] = VM.VIFs
 
-		VM.ActionsAfterReboot.String()
+	result["VBDs"] = VM.VBDs
 
-	result["actions_after_crash"] =
+	result["VUSBs"] = VM.VUSBs
 
-		VM.ActionsAfterCrash.String()
+	result["crash_dumps"] = VM.CrashDumps
 
-	result["consoles"] =
+	result["VTPMs"] = VM.VTPMs
 
-		VM.Consoles
+	result["PV_bootloader"] = VM.PVBootloader
 
-	result["VIFs"] =
+	result["PV_kernel"] = VM.PVKernel
 
-		VM.VIFs
+	result["PV_ramdisk"] = VM.PVRamdisk
 
-	result["VBDs"] =
+	result["PV_args"] = VM.PVArgs
 
-		VM.VBDs
+	result["PV_bootloader_args"] = VM.PVBootloaderArgs
 
-	result["VUSBs"] =
+	result["PV_legacy_args"] = VM.PVLegacyArgs
 
-		VM.VUSBs
-
-	result["crash_dumps"] =
-
-		VM.CrashDumps
-
-	result["VTPMs"] =
-
-		VM.VTPMs
-
-	result["PV_bootloader"] =
-
-		VM.PVBootloader
-
-	result["PV_kernel"] =
-
-		VM.PVKernel
-
-	result["PV_ramdisk"] =
-
-		VM.PVRamdisk
-
-	result["PV_args"] =
-
-		VM.PVArgs
-
-	result["PV_bootloader_args"] =
-
-		VM.PVBootloaderArgs
-
-	result["PV_legacy_args"] =
-
-		VM.PVLegacyArgs
-
-	result["HVM_boot_policy"] =
-
-		VM.HVMBootPolicy
+	result["HVM_boot_policy"] = VM.HVMBootPolicy
 
 	HVM_boot_params := make(xmlrpc.Struct)
 	for key, value := range VM.HVMBootParams {
@@ -263,9 +193,7 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["HVM_boot_params"] = HVM_boot_params
 
-	result["HVM_shadow_multiplier"] =
-
-		VM.HVMShadowMultiplier
+	result["HVM_shadow_multiplier"] = VM.HVMShadowMultiplier
 
 	platform := make(xmlrpc.Struct)
 	for key, value := range VM.Platform {
@@ -273,9 +201,7 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["platform"] = platform
 
-	result["PCI_bus"] =
-
-		VM.PCIBus
+	result["PCI_bus"] = VM.PCIBus
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VM.OtherConfig {
@@ -283,13 +209,9 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["domid"] =
+	result["domid"] = strconv.Itoa(VM.Domid)
 
-		strconv.Itoa(VM.Domid)
-
-	result["domarch"] =
-
-		VM.Domarch
+	result["domarch"] = VM.Domarch
 
 	last_boot_CPU_flags := make(xmlrpc.Struct)
 	for key, value := range VM.LastBootCPUFlags {
@@ -297,25 +219,15 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["last_boot_CPU_flags"] = last_boot_CPU_flags
 
-	result["is_control_domain"] =
+	result["is_control_domain"] = VM.IsControlDomain
 
-		VM.IsControlDomain
+	result["metrics"] = VM.Metrics
 
-	result["metrics"] =
+	result["guest_metrics"] = VM.GuestMetrics
 
-		VM.Metrics
+	result["last_booted_record"] = VM.LastBootedRecord
 
-	result["guest_metrics"] =
-
-		VM.GuestMetrics
-
-	result["last_booted_record"] =
-
-		VM.LastBootedRecord
-
-	result["recommendations"] =
-
-		VM.Recommendations
+	result["recommendations"] = VM.Recommendations
 
 	xenstore_data := make(xmlrpc.Struct)
 	for key, value := range VM.XenstoreData {
@@ -323,33 +235,19 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["xenstore_data"] = xenstore_data
 
-	result["ha_always_run"] =
+	result["ha_always_run"] = VM.HaAlwaysRun
 
-		VM.HaAlwaysRun
+	result["ha_restart_priority"] = VM.HaRestartPriority
 
-	result["ha_restart_priority"] =
+	result["is_a_snapshot"] = VM.IsASnapshot
 
-		VM.HaRestartPriority
+	result["snapshot_of"] = VM.SnapshotOf
 
-	result["is_a_snapshot"] =
+	result["snapshots"] = VM.Snapshots
 
-		VM.IsASnapshot
+	result["snapshot_time"] = VM.SnapshotTime
 
-	result["snapshot_of"] =
-
-		VM.SnapshotOf
-
-	result["snapshots"] =
-
-		VM.Snapshots
-
-	result["snapshot_time"] =
-
-		VM.SnapshotTime
-
-	result["transportable_snapshot_id"] =
-
-		VM.TransportableSnapshotId
+	result["transportable_snapshot_id"] = VM.TransportableSnapshotId
 
 	blobs := make(xmlrpc.Struct)
 	for key, value := range VM.Blobs {
@@ -357,9 +255,7 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["blobs"] = blobs
 
-	result["tags"] =
-
-		VM.Tags
+	result["tags"] = VM.Tags
 
 	blocked_operations := make(xmlrpc.Struct)
 	for key, value := range VM.BlockedOperations {
@@ -373,17 +269,11 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["snapshot_info"] = snapshot_info
 
-	result["snapshot_metadata"] =
+	result["snapshot_metadata"] = VM.SnapshotMetadata
 
-		VM.SnapshotMetadata
+	result["parent"] = VM.Parent
 
-	result["parent"] =
-
-		VM.Parent
-
-	result["children"] =
-
-		VM.Children
+	result["children"] = VM.Children
 
 	bios_strings := make(xmlrpc.Struct)
 	for key, value := range VM.BiosStrings {
@@ -391,77 +281,41 @@ func FromVMToXml(VM *VM) (result xmlrpc.Struct) {
 	}
 	result["bios_strings"] = bios_strings
 
-	result["protection_policy"] =
+	result["protection_policy"] = VM.ProtectionPolicy
 
-		VM.ProtectionPolicy
+	result["is_snapshot_from_vmpp"] = VM.IsSnapshotFromVmpp
 
-	result["is_snapshot_from_vmpp"] =
+	result["snapshot_schedule"] = VM.SnapshotSchedule
 
-		VM.IsSnapshotFromVmpp
+	result["is_vmss_snapshot"] = VM.IsVmssSnapshot
 
-	result["snapshot_schedule"] =
+	result["appliance"] = VM.Appliance
 
-		VM.SnapshotSchedule
+	result["start_delay"] = strconv.Itoa(VM.StartDelay)
 
-	result["is_vmss_snapshot"] =
+	result["shutdown_delay"] = strconv.Itoa(VM.ShutdownDelay)
 
-		VM.IsVmssSnapshot
+	result["order"] = strconv.Itoa(VM.Order)
 
-	result["appliance"] =
+	result["VGPUs"] = VM.VGPUs
 
-		VM.Appliance
+	result["attached_PCIs"] = VM.AttachedPCIs
 
-	result["start_delay"] =
+	result["suspend_SR"] = VM.SuspendSR
 
-		strconv.Itoa(VM.StartDelay)
+	result["version"] = strconv.Itoa(VM.Version)
 
-	result["shutdown_delay"] =
+	result["generation_id"] = VM.GenerationId
 
-		strconv.Itoa(VM.ShutdownDelay)
+	result["hardware_platform_version"] = strconv.Itoa(VM.HardwarePlatformVersion)
 
-	result["order"] =
+	result["has_vendor_device"] = VM.HasVendorDevice
 
-		strconv.Itoa(VM.Order)
+	result["requires_reboot"] = VM.RequiresReboot
 
-	result["VGPUs"] =
+	result["reference_label"] = VM.ReferenceLabel
 
-		VM.VGPUs
-
-	result["attached_PCIs"] =
-
-		VM.AttachedPCIs
-
-	result["suspend_SR"] =
-
-		VM.SuspendSR
-
-	result["version"] =
-
-		strconv.Itoa(VM.Version)
-
-	result["generation_id"] =
-
-		VM.GenerationId
-
-	result["hardware_platform_version"] =
-
-		strconv.Itoa(VM.HardwarePlatformVersion)
-
-	result["has_vendor_device"] =
-
-		VM.HasVendorDevice
-
-	result["requires_reboot"] =
-
-		VM.RequiresReboot
-
-	result["reference_label"] =
-
-		VM.ReferenceLabel
-
-	result["domain_type"] =
-
-		VM.DomainType.String()
+	result["domain_type"] = VM.DomainType.String()
 
 	NVRAM := make(xmlrpc.Struct)
 	for key, value := range VM.NVRAM {

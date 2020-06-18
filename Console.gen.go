@@ -22,21 +22,13 @@ type Console struct {
 func FromConsoleToXml(console *Console) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = console.Uuid
 
-		console.Uuid
+	result["protocol"] = console.Protocol.String()
 
-	result["protocol"] =
+	result["location"] = console.Location
 
-		console.Protocol.String()
-
-	result["location"] =
-
-		console.Location
-
-	result["VM"] =
-
-		console.VM
+	result["VM"] = console.VM
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range console.OtherConfig {

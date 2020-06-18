@@ -26,33 +26,19 @@ type Event struct {
 func FromEventToXml(event *Event) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["snapshot"] =
+	result["snapshot"] = event.Snapshot
 
-		event.Snapshot
+	result["id"] = strconv.Itoa(event.Id)
 
-	result["id"] =
+	result["timestamp"] = event.Timestamp
 
-		strconv.Itoa(event.Id)
+	result["class"] = event.Class
 
-	result["timestamp"] =
+	result["operation"] = event.Operation.String()
 
-		event.Timestamp
+	result["ref"] = event.Ref
 
-	result["class"] =
-
-		event.Class
-
-	result["operation"] =
-
-		event.Operation.String()
-
-	result["ref"] =
-
-		event.Ref
-
-	result["obj_uuid"] =
-
-		event.ObjUuid
+	result["obj_uuid"] = event.ObjUuid
 
 	return result
 }

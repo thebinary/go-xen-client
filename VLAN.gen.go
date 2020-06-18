@@ -23,21 +23,13 @@ type VLAN struct {
 func FromVLANToXml(VLAN *VLAN) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VLAN.Uuid
 
-		VLAN.Uuid
+	result["tagged_PIF"] = VLAN.TaggedPIF
 
-	result["tagged_PIF"] =
+	result["untagged_PIF"] = VLAN.UntaggedPIF
 
-		VLAN.TaggedPIF
-
-	result["untagged_PIF"] =
-
-		VLAN.UntaggedPIF
-
-	result["tag"] =
-
-		strconv.Itoa(VLAN.Tag)
+	result["tag"] = strconv.Itoa(VLAN.Tag)
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VLAN.OtherConfig {

@@ -24,33 +24,19 @@ type PVSSite struct {
 func FromPVSSiteToXml(PVS_site *PVSSite) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PVS_site.Uuid
 
-		PVS_site.Uuid
+	result["name_label"] = PVS_site.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = PVS_site.NameDescription
 
-		PVS_site.NameLabel
+	result["PVS_uuid"] = PVS_site.PVSUuid
 
-	result["name_description"] =
+	result["cache_storage"] = PVS_site.CacheStorage
 
-		PVS_site.NameDescription
+	result["servers"] = PVS_site.Servers
 
-	result["PVS_uuid"] =
-
-		PVS_site.PVSUuid
-
-	result["cache_storage"] =
-
-		PVS_site.CacheStorage
-
-	result["servers"] =
-
-		PVS_site.Servers
-
-	result["proxies"] =
-
-		PVS_site.Proxies
+	result["proxies"] = PVS_site.Proxies
 
 	return result
 }

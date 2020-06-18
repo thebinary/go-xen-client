@@ -23,25 +23,15 @@ type VdiNbdServerInfo struct {
 func FromVdiNbdServerInfoToXml(vdi_nbd_server_info *VdiNbdServerInfo) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["exportname"] =
+	result["exportname"] = vdi_nbd_server_info.Exportname
 
-		vdi_nbd_server_info.Exportname
+	result["address"] = vdi_nbd_server_info.Address
 
-	result["address"] =
+	result["port"] = strconv.Itoa(vdi_nbd_server_info.Port)
 
-		vdi_nbd_server_info.Address
+	result["cert"] = vdi_nbd_server_info.Cert
 
-	result["port"] =
-
-		strconv.Itoa(vdi_nbd_server_info.Port)
-
-	result["cert"] =
-
-		vdi_nbd_server_info.Cert
-
-	result["subject"] =
-
-		vdi_nbd_server_info.Subject
+	result["subject"] = vdi_nbd_server_info.Subject
 
 	return result
 }

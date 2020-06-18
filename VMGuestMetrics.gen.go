@@ -32,9 +32,7 @@ type VMGuestMetrics struct {
 func FromVMGuestMetricsToXml(VM_guest_metrics *VMGuestMetrics) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
-
-		VM_guest_metrics.Uuid
+	result["uuid"] = VM_guest_metrics.Uuid
 
 	os_version := make(xmlrpc.Struct)
 	for key, value := range VM_guest_metrics.OsVersion {
@@ -48,9 +46,7 @@ func FromVMGuestMetricsToXml(VM_guest_metrics *VMGuestMetrics) (result xmlrpc.St
 	}
 	result["PV_drivers_version"] = PV_drivers_version
 
-	result["PV_drivers_up_to_date"] =
-
-		VM_guest_metrics.PVDriversUpToDate
+	result["PV_drivers_up_to_date"] = VM_guest_metrics.PVDriversUpToDate
 
 	memory := make(xmlrpc.Struct)
 	for key, value := range VM_guest_metrics.Memory {
@@ -76,9 +72,7 @@ func FromVMGuestMetricsToXml(VM_guest_metrics *VMGuestMetrics) (result xmlrpc.St
 	}
 	result["other"] = other
 
-	result["last_updated"] =
-
-		VM_guest_metrics.LastUpdated
+	result["last_updated"] = VM_guest_metrics.LastUpdated
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VM_guest_metrics.OtherConfig {
@@ -86,21 +80,13 @@ func FromVMGuestMetricsToXml(VM_guest_metrics *VMGuestMetrics) (result xmlrpc.St
 	}
 	result["other_config"] = other_config
 
-	result["live"] =
+	result["live"] = VM_guest_metrics.Live
 
-		VM_guest_metrics.Live
+	result["can_use_hotplug_vbd"] = VM_guest_metrics.CanUseHotplugVbd.String()
 
-	result["can_use_hotplug_vbd"] =
+	result["can_use_hotplug_vif"] = VM_guest_metrics.CanUseHotplugVif.String()
 
-		VM_guest_metrics.CanUseHotplugVbd.String()
-
-	result["can_use_hotplug_vif"] =
-
-		VM_guest_metrics.CanUseHotplugVif.String()
-
-	result["PV_drivers_detected"] =
-
-		VM_guest_metrics.PVDriversDetected
+	result["PV_drivers_detected"] = VM_guest_metrics.PVDriversDetected
 
 	return result
 }

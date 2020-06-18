@@ -27,13 +27,9 @@ func FromProbeResultToXml(probe_result *ProbeResult) (result xmlrpc.Struct) {
 	}
 	result["configuration"] = configuration
 
-	result["complete"] =
+	result["complete"] = probe_result.Complete
 
-		probe_result.Complete
-
-	result["sr"] =
-
-		probe_result.Sr
+	result["sr"] = probe_result.Sr
 
 	extra_info := make(xmlrpc.Struct)
 	for key, value := range probe_result.ExtraInfo {

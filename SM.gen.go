@@ -31,37 +31,21 @@ type SM struct {
 func FromSMToXml(SM *SM) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = SM.Uuid
 
-		SM.Uuid
+	result["name_label"] = SM.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = SM.NameDescription
 
-		SM.NameLabel
+	result["type"] = SM.Type
 
-	result["name_description"] =
+	result["vendor"] = SM.Vendor
 
-		SM.NameDescription
+	result["copyright"] = SM.Copyright
 
-	result["type"] =
+	result["version"] = SM.Version
 
-		SM.Type
-
-	result["vendor"] =
-
-		SM.Vendor
-
-	result["copyright"] =
-
-		SM.Copyright
-
-	result["version"] =
-
-		SM.Version
-
-	result["required_api_version"] =
-
-		SM.RequiredApiVersion
+	result["required_api_version"] = SM.RequiredApiVersion
 
 	configuration := make(xmlrpc.Struct)
 	for key, value := range SM.Configuration {
@@ -69,9 +53,7 @@ func FromSMToXml(SM *SM) (result xmlrpc.Struct) {
 	}
 	result["configuration"] = configuration
 
-	result["capabilities"] =
-
-		SM.Capabilities
+	result["capabilities"] = SM.Capabilities
 
 	features := make(xmlrpc.Struct)
 	for key, value := range SM.Features {
@@ -85,13 +67,9 @@ func FromSMToXml(SM *SM) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["driver_filename"] =
+	result["driver_filename"] = SM.DriverFilename
 
-		SM.DriverFilename
-
-	result["required_cluster_stack"] =
-
-		SM.RequiredClusterStack
+	result["required_cluster_stack"] = SM.RequiredClusterStack
 
 	return result
 }

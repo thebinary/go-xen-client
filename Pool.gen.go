@@ -55,33 +55,19 @@ type Pool struct {
 func FromPoolToXml(pool *Pool) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = pool.Uuid
 
-		pool.Uuid
+	result["name_label"] = pool.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = pool.NameDescription
 
-		pool.NameLabel
+	result["master"] = pool.Master
 
-	result["name_description"] =
+	result["default_SR"] = pool.DefaultSR
 
-		pool.NameDescription
+	result["suspend_image_SR"] = pool.SuspendImageSR
 
-	result["master"] =
-
-		pool.Master
-
-	result["default_SR"] =
-
-		pool.DefaultSR
-
-	result["suspend_image_SR"] =
-
-		pool.SuspendImageSR
-
-	result["crash_dump_SR"] =
-
-		pool.CrashDumpSR
+	result["crash_dump_SR"] = pool.CrashDumpSR
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range pool.OtherConfig {
@@ -89,9 +75,7 @@ func FromPoolToXml(pool *Pool) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["ha_enabled"] =
-
-		pool.HaEnabled
+	result["ha_enabled"] = pool.HaEnabled
 
 	ha_configuration := make(xmlrpc.Struct)
 	for key, value := range pool.HaConfiguration {
@@ -99,25 +83,15 @@ func FromPoolToXml(pool *Pool) (result xmlrpc.Struct) {
 	}
 	result["ha_configuration"] = ha_configuration
 
-	result["ha_statefiles"] =
+	result["ha_statefiles"] = pool.HaStatefiles
 
-		pool.HaStatefiles
+	result["ha_host_failures_to_tolerate"] = strconv.Itoa(pool.HaHostFailuresToTolerate)
 
-	result["ha_host_failures_to_tolerate"] =
+	result["ha_plan_exists_for"] = strconv.Itoa(pool.HaPlanExistsFor)
 
-		strconv.Itoa(pool.HaHostFailuresToTolerate)
+	result["ha_allow_overcommit"] = pool.HaAllowOvercommit
 
-	result["ha_plan_exists_for"] =
-
-		strconv.Itoa(pool.HaPlanExistsFor)
-
-	result["ha_allow_overcommit"] =
-
-		pool.HaAllowOvercommit
-
-	result["ha_overcommitted"] =
-
-		pool.HaOvercommitted
+	result["ha_overcommitted"] = pool.HaOvercommitted
 
 	blobs := make(xmlrpc.Struct)
 	for key, value := range pool.Blobs {
@@ -125,9 +99,7 @@ func FromPoolToXml(pool *Pool) (result xmlrpc.Struct) {
 	}
 	result["blobs"] = blobs
 
-	result["tags"] =
-
-		pool.Tags
+	result["tags"] = pool.Tags
 
 	gui_config := make(xmlrpc.Struct)
 	for key, value := range pool.GuiConfig {
@@ -141,33 +113,19 @@ func FromPoolToXml(pool *Pool) (result xmlrpc.Struct) {
 	}
 	result["health_check_config"] = health_check_config
 
-	result["wlb_url"] =
+	result["wlb_url"] = pool.WlbUrl
 
-		pool.WlbUrl
+	result["wlb_username"] = pool.WlbUsername
 
-	result["wlb_username"] =
+	result["wlb_enabled"] = pool.WlbEnabled
 
-		pool.WlbUsername
+	result["wlb_verify_cert"] = pool.WlbVerifyCert
 
-	result["wlb_enabled"] =
+	result["redo_log_enabled"] = pool.RedoLogEnabled
 
-		pool.WlbEnabled
+	result["redo_log_vdi"] = pool.RedoLogVdi
 
-	result["wlb_verify_cert"] =
-
-		pool.WlbVerifyCert
-
-	result["redo_log_enabled"] =
-
-		pool.RedoLogEnabled
-
-	result["redo_log_vdi"] =
-
-		pool.RedoLogVdi
-
-	result["vswitch_controller"] =
-
-		pool.VswitchController
+	result["vswitch_controller"] = pool.VswitchController
 
 	restrictions := make(xmlrpc.Struct)
 	for key, value := range pool.Restrictions {
@@ -175,17 +133,11 @@ func FromPoolToXml(pool *Pool) (result xmlrpc.Struct) {
 	}
 	result["restrictions"] = restrictions
 
-	result["metadata_VDIs"] =
+	result["metadata_VDIs"] = pool.MetadataVDIs
 
-		pool.MetadataVDIs
+	result["ha_cluster_stack"] = pool.HaClusterStack
 
-	result["ha_cluster_stack"] =
-
-		pool.HaClusterStack
-
-	result["allowed_operations"] =
-
-		pool.AllowedOperations
+	result["allowed_operations"] = pool.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range pool.CurrentOperations {
@@ -205,21 +157,13 @@ func FromPoolToXml(pool *Pool) (result xmlrpc.Struct) {
 	}
 	result["cpu_info"] = cpu_info
 
-	result["policy_no_vendor_device"] =
+	result["policy_no_vendor_device"] = pool.PolicyNoVendorDevice
 
-		pool.PolicyNoVendorDevice
+	result["live_patching_disabled"] = pool.LivePatchingDisabled
 
-	result["live_patching_disabled"] =
+	result["igmp_snooping_enabled"] = pool.IgmpSnoopingEnabled
 
-		pool.LivePatchingDisabled
-
-	result["igmp_snooping_enabled"] =
-
-		pool.IgmpSnoopingEnabled
-
-	result["uefi_certificates"] =
-
-		pool.UefiCertificates
+	result["uefi_certificates"] = pool.UefiCertificates
 
 	return result
 }

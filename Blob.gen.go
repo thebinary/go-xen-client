@@ -26,33 +26,19 @@ type Blob struct {
 func FromBlobToXml(blob *Blob) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = blob.Uuid
 
-		blob.Uuid
+	result["name_label"] = blob.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = blob.NameDescription
 
-		blob.NameLabel
+	result["size"] = strconv.Itoa(blob.Size)
 
-	result["name_description"] =
+	result["public"] = blob.Public
 
-		blob.NameDescription
+	result["last_updated"] = blob.LastUpdated
 
-	result["size"] =
-
-		strconv.Itoa(blob.Size)
-
-	result["public"] =
-
-		blob.Public
-
-	result["last_updated"] =
-
-		blob.LastUpdated
-
-	result["mime_type"] =
-
-		blob.MimeType
+	result["mime_type"] = blob.MimeType
 
 	return result
 }

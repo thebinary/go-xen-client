@@ -39,21 +39,13 @@ type SR struct {
 func FromSRToXml(SR *SR) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = SR.Uuid
 
-		SR.Uuid
+	result["name_label"] = SR.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = SR.NameDescription
 
-		SR.NameLabel
-
-	result["name_description"] =
-
-		SR.NameDescription
-
-	result["allowed_operations"] =
-
-		SR.AllowedOperations
+	result["allowed_operations"] = SR.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range SR.CurrentOperations {
@@ -61,37 +53,21 @@ func FromSRToXml(SR *SR) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["VDIs"] =
+	result["VDIs"] = SR.VDIs
 
-		SR.VDIs
+	result["PBDs"] = SR.PBDs
 
-	result["PBDs"] =
+	result["virtual_allocation"] = strconv.Itoa(SR.VirtualAllocation)
 
-		SR.PBDs
+	result["physical_utilisation"] = strconv.Itoa(SR.PhysicalUtilisation)
 
-	result["virtual_allocation"] =
+	result["physical_size"] = strconv.Itoa(SR.PhysicalSize)
 
-		strconv.Itoa(SR.VirtualAllocation)
+	result["type"] = SR.Type
 
-	result["physical_utilisation"] =
+	result["content_type"] = SR.ContentType
 
-		strconv.Itoa(SR.PhysicalUtilisation)
-
-	result["physical_size"] =
-
-		strconv.Itoa(SR.PhysicalSize)
-
-	result["type"] =
-
-		SR.Type
-
-	result["content_type"] =
-
-		SR.ContentType
-
-	result["shared"] =
-
-		SR.Shared
+	result["shared"] = SR.Shared
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range SR.OtherConfig {
@@ -99,9 +75,7 @@ func FromSRToXml(SR *SR) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["tags"] =
-
-		SR.Tags
+	result["tags"] = SR.Tags
 
 	sm_config := make(xmlrpc.Struct)
 	for key, value := range SR.SmConfig {
@@ -115,21 +89,13 @@ func FromSRToXml(SR *SR) (result xmlrpc.Struct) {
 	}
 	result["blobs"] = blobs
 
-	result["local_cache_enabled"] =
+	result["local_cache_enabled"] = SR.LocalCacheEnabled
 
-		SR.LocalCacheEnabled
+	result["introduced_by"] = SR.IntroducedBy
 
-	result["introduced_by"] =
+	result["clustered"] = SR.Clustered
 
-		SR.IntroducedBy
-
-	result["clustered"] =
-
-		SR.Clustered
-
-	result["is_tools_sr"] =
-
-		SR.IsToolsSr
+	result["is_tools_sr"] = SR.IsToolsSr
 
 	return result
 }

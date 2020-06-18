@@ -29,41 +29,23 @@ type HostPatch struct {
 func FromHostPatchToXml(host_patch *HostPatch) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = host_patch.Uuid
 
-		host_patch.Uuid
+	result["name_label"] = host_patch.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = host_patch.NameDescription
 
-		host_patch.NameLabel
+	result["version"] = host_patch.Version
 
-	result["name_description"] =
+	result["host"] = host_patch.Host
 
-		host_patch.NameDescription
+	result["applied"] = host_patch.Applied
 
-	result["version"] =
+	result["timestamp_applied"] = host_patch.TimestampApplied
 
-		host_patch.Version
+	result["size"] = strconv.Itoa(host_patch.Size)
 
-	result["host"] =
-
-		host_patch.Host
-
-	result["applied"] =
-
-		host_patch.Applied
-
-	result["timestamp_applied"] =
-
-		host_patch.TimestampApplied
-
-	result["size"] =
-
-		strconv.Itoa(host_patch.Size)
-
-	result["pool_patch"] =
-
-		host_patch.PoolPatch
+	result["pool_patch"] = host_patch.PoolPatch
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range host_patch.OtherConfig {

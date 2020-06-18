@@ -21,13 +21,9 @@ type Subject struct {
 func FromSubjectToXml(subject *Subject) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = subject.Uuid
 
-		subject.Uuid
-
-	result["subject_identifier"] =
-
-		subject.SubjectIdentifier
+	result["subject_identifier"] = subject.SubjectIdentifier
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range subject.OtherConfig {
@@ -35,9 +31,7 @@ func FromSubjectToXml(subject *Subject) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["roles"] =
-
-		subject.Roles
+	result["roles"] = subject.Roles
 
 	return result
 }

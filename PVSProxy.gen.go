@@ -22,25 +22,15 @@ type PVSProxy struct {
 func FromPVSProxyToXml(PVS_proxy *PVSProxy) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PVS_proxy.Uuid
 
-		PVS_proxy.Uuid
+	result["site"] = PVS_proxy.Site
 
-	result["site"] =
+	result["VIF"] = PVS_proxy.VIF
 
-		PVS_proxy.Site
+	result["currently_attached"] = PVS_proxy.CurrentlyAttached
 
-	result["VIF"] =
-
-		PVS_proxy.VIF
-
-	result["currently_attached"] =
-
-		PVS_proxy.CurrentlyAttached
-
-	result["status"] =
-
-		PVS_proxy.Status.String()
+	result["status"] = PVS_proxy.Status.String()
 
 	return result
 }

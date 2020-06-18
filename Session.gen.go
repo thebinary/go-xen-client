@@ -33,25 +33,15 @@ type Session struct {
 func FromSessionToXml(session *Session) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = session.Uuid
 
-		session.Uuid
+	result["this_host"] = session.ThisHost
 
-	result["this_host"] =
+	result["this_user"] = session.ThisUser
 
-		session.ThisHost
+	result["last_active"] = session.LastActive
 
-	result["this_user"] =
-
-		session.ThisUser
-
-	result["last_active"] =
-
-		session.LastActive
-
-	result["pool"] =
-
-		session.Pool
+	result["pool"] = session.Pool
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range session.OtherConfig {
@@ -59,41 +49,23 @@ func FromSessionToXml(session *Session) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["is_local_superuser"] =
+	result["is_local_superuser"] = session.IsLocalSuperuser
 
-		session.IsLocalSuperuser
+	result["subject"] = session.Subject
 
-	result["subject"] =
+	result["validation_time"] = session.ValidationTime
 
-		session.Subject
+	result["auth_user_sid"] = session.AuthUserSid
 
-	result["validation_time"] =
+	result["auth_user_name"] = session.AuthUserName
 
-		session.ValidationTime
+	result["rbac_permissions"] = session.RbacPermissions
 
-	result["auth_user_sid"] =
+	result["tasks"] = session.Tasks
 
-		session.AuthUserSid
+	result["parent"] = session.Parent
 
-	result["auth_user_name"] =
-
-		session.AuthUserName
-
-	result["rbac_permissions"] =
-
-		session.RbacPermissions
-
-	result["tasks"] =
-
-		session.Tasks
-
-	result["parent"] =
-
-		session.Parent
-
-	result["originator"] =
-
-		session.Originator
+	result["originator"] = session.Originator
 
 	return result
 }

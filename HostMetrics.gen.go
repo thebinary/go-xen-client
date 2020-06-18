@@ -25,25 +25,15 @@ type HostMetrics struct {
 func FromHostMetricsToXml(host_metrics *HostMetrics) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = host_metrics.Uuid
 
-		host_metrics.Uuid
+	result["memory_total"] = strconv.Itoa(host_metrics.MemoryTotal)
 
-	result["memory_total"] =
+	result["memory_free"] = strconv.Itoa(host_metrics.MemoryFree)
 
-		strconv.Itoa(host_metrics.MemoryTotal)
+	result["live"] = host_metrics.Live
 
-	result["memory_free"] =
-
-		strconv.Itoa(host_metrics.MemoryFree)
-
-	result["live"] =
-
-		host_metrics.Live
-
-	result["last_updated"] =
-
-		host_metrics.LastUpdated
+	result["last_updated"] = host_metrics.LastUpdated
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range host_metrics.OtherConfig {

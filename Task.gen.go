@@ -35,21 +35,13 @@ type Task struct {
 func FromTaskToXml(task *Task) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = task.Uuid
 
-		task.Uuid
+	result["name_label"] = task.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = task.NameDescription
 
-		task.NameLabel
-
-	result["name_description"] =
-
-		task.NameDescription
-
-	result["allowed_operations"] =
-
-		task.AllowedOperations
+	result["allowed_operations"] = task.AllowedOperations
 
 	current_operations := make(xmlrpc.Struct)
 	for key, value := range task.CurrentOperations {
@@ -57,37 +49,21 @@ func FromTaskToXml(task *Task) (result xmlrpc.Struct) {
 	}
 	result["current_operations"] = current_operations
 
-	result["created"] =
+	result["created"] = task.Created
 
-		task.Created
+	result["finished"] = task.Finished
 
-	result["finished"] =
+	result["status"] = task.Status.String()
 
-		task.Finished
+	result["resident_on"] = task.ResidentOn
 
-	result["status"] =
+	result["progress"] = task.Progress
 
-		task.Status.String()
+	result["type"] = task.Type
 
-	result["resident_on"] =
+	result["result"] = task.Result
 
-		task.ResidentOn
-
-	result["progress"] =
-
-		task.Progress
-
-	result["type"] =
-
-		task.Type
-
-	result["result"] =
-
-		task.Result
-
-	result["error_info"] =
-
-		task.ErrorInfo
+	result["error_info"] = task.ErrorInfo
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range task.OtherConfig {
@@ -95,17 +71,11 @@ func FromTaskToXml(task *Task) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["subtask_of"] =
+	result["subtask_of"] = task.SubtaskOf
 
-		task.SubtaskOf
+	result["subtasks"] = task.Subtasks
 
-	result["subtasks"] =
-
-		task.Subtasks
-
-	result["backtrace"] =
-
-		task.Backtrace
+	result["backtrace"] = task.Backtrace
 
 	return result
 }

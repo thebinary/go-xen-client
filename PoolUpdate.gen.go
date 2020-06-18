@@ -29,41 +29,23 @@ type PoolUpdate struct {
 func FromPoolUpdateToXml(pool_update *PoolUpdate) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = pool_update.Uuid
 
-		pool_update.Uuid
+	result["name_label"] = pool_update.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = pool_update.NameDescription
 
-		pool_update.NameLabel
+	result["version"] = pool_update.Version
 
-	result["name_description"] =
+	result["installation_size"] = strconv.Itoa(pool_update.InstallationSize)
 
-		pool_update.NameDescription
+	result["key"] = pool_update.Key
 
-	result["version"] =
+	result["after_apply_guidance"] = pool_update.AfterApplyGuidance
 
-		pool_update.Version
+	result["vdi"] = pool_update.Vdi
 
-	result["installation_size"] =
-
-		strconv.Itoa(pool_update.InstallationSize)
-
-	result["key"] =
-
-		pool_update.Key
-
-	result["after_apply_guidance"] =
-
-		pool_update.AfterApplyGuidance
-
-	result["vdi"] =
-
-		pool_update.Vdi
-
-	result["hosts"] =
-
-		pool_update.Hosts
+	result["hosts"] = pool_update.Hosts
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range pool_update.OtherConfig {
@@ -71,9 +53,7 @@ func FromPoolUpdateToXml(pool_update *PoolUpdate) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["enforce_homogeneity"] =
-
-		pool_update.EnforceHomogeneity
+	result["enforce_homogeneity"] = pool_update.EnforceHomogeneity
 
 	return result
 }

@@ -22,17 +22,11 @@ type Tunnel struct {
 func FromTunnelToXml(tunnel *Tunnel) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = tunnel.Uuid
 
-		tunnel.Uuid
+	result["access_PIF"] = tunnel.AccessPIF
 
-	result["access_PIF"] =
-
-		tunnel.AccessPIF
-
-	result["transport_PIF"] =
-
-		tunnel.TransportPIF
+	result["transport_PIF"] = tunnel.TransportPIF
 
 	status := make(xmlrpc.Struct)
 	for key, value := range tunnel.Status {

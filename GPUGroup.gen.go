@@ -27,29 +27,17 @@ type GPUGroup struct {
 func FromGPUGroupToXml(GPU_group *GPUGroup) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = GPU_group.Uuid
 
-		GPU_group.Uuid
+	result["name_label"] = GPU_group.NameLabel
 
-	result["name_label"] =
+	result["name_description"] = GPU_group.NameDescription
 
-		GPU_group.NameLabel
+	result["PGPUs"] = GPU_group.PGPUs
 
-	result["name_description"] =
+	result["VGPUs"] = GPU_group.VGPUs
 
-		GPU_group.NameDescription
-
-	result["PGPUs"] =
-
-		GPU_group.PGPUs
-
-	result["VGPUs"] =
-
-		GPU_group.VGPUs
-
-	result["GPU_types"] =
-
-		GPU_group.GPUTypes
+	result["GPU_types"] = GPU_group.GPUTypes
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range GPU_group.OtherConfig {
@@ -57,17 +45,11 @@ func FromGPUGroupToXml(GPU_group *GPUGroup) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["allocation_algorithm"] =
+	result["allocation_algorithm"] = GPU_group.AllocationAlgorithm.String()
 
-		GPU_group.AllocationAlgorithm.String()
+	result["supported_VGPU_types"] = GPU_group.SupportedVGPUTypes
 
-	result["supported_VGPU_types"] =
-
-		GPU_group.SupportedVGPUTypes
-
-	result["enabled_VGPU_types"] =
-
-		GPU_group.EnabledVGPUTypes
+	result["enabled_VGPU_types"] = GPU_group.EnabledVGPUTypes
 
 	return result
 }

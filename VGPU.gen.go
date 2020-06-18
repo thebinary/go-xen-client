@@ -28,25 +28,15 @@ type VGPU struct {
 func FromVGPUToXml(VGPU *VGPU) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = VGPU.Uuid
 
-		VGPU.Uuid
+	result["VM"] = VGPU.VM
 
-	result["VM"] =
+	result["GPU_group"] = VGPU.GPUGroup
 
-		VGPU.VM
+	result["device"] = VGPU.Device
 
-	result["GPU_group"] =
-
-		VGPU.GPUGroup
-
-	result["device"] =
-
-		VGPU.Device
-
-	result["currently_attached"] =
-
-		VGPU.CurrentlyAttached
+	result["currently_attached"] = VGPU.CurrentlyAttached
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range VGPU.OtherConfig {
@@ -54,17 +44,11 @@ func FromVGPUToXml(VGPU *VGPU) (result xmlrpc.Struct) {
 	}
 	result["other_config"] = other_config
 
-	result["type"] =
+	result["type"] = VGPU.Type
 
-		VGPU.Type
+	result["resident_on"] = VGPU.ResidentOn
 
-	result["resident_on"] =
-
-		VGPU.ResidentOn
-
-	result["scheduled_to_be_resident_on"] =
-
-		VGPU.ScheduledToBeResidentOn
+	result["scheduled_to_be_resident_on"] = VGPU.ScheduledToBeResidentOn
 
 	compatibility_metadata := make(xmlrpc.Struct)
 	for key, value := range VGPU.CompatibilityMetadata {
@@ -72,9 +56,7 @@ func FromVGPUToXml(VGPU *VGPU) (result xmlrpc.Struct) {
 	}
 	result["compatibility_metadata"] = compatibility_metadata
 
-	result["extra_args"] =
-
-		VGPU.ExtraArgs
+	result["extra_args"] = VGPU.ExtraArgs
 
 	return result
 }

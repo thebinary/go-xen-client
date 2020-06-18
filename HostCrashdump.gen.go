@@ -24,21 +24,13 @@ type HostCrashdump struct {
 func FromHostCrashdumpToXml(host_crashdump *HostCrashdump) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = host_crashdump.Uuid
 
-		host_crashdump.Uuid
+	result["host"] = host_crashdump.Host
 
-	result["host"] =
+	result["timestamp"] = host_crashdump.Timestamp
 
-		host_crashdump.Host
-
-	result["timestamp"] =
-
-		host_crashdump.Timestamp
-
-	result["size"] =
-
-		strconv.Itoa(host_crashdump.Size)
+	result["size"] = strconv.Itoa(host_crashdump.Size)
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range host_crashdump.OtherConfig {

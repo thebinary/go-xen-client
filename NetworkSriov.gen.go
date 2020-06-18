@@ -22,25 +22,15 @@ type NetworkSriov struct {
 func FromNetworkSriovToXml(network_sriov *NetworkSriov) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = network_sriov.Uuid
 
-		network_sriov.Uuid
+	result["physical_PIF"] = network_sriov.PhysicalPIF
 
-	result["physical_PIF"] =
+	result["logical_PIF"] = network_sriov.LogicalPIF
 
-		network_sriov.PhysicalPIF
+	result["requires_reboot"] = network_sriov.RequiresReboot
 
-	result["logical_PIF"] =
-
-		network_sriov.LogicalPIF
-
-	result["requires_reboot"] =
-
-		network_sriov.RequiresReboot
-
-	result["configuration_mode"] =
-
-		network_sriov.ConfigurationMode.String()
+	result["configuration_mode"] = network_sriov.ConfigurationMode.String()
 
 	return result
 }

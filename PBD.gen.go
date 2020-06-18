@@ -23,17 +23,11 @@ type PBD struct {
 func FromPBDToXml(PBD *PBD) (result xmlrpc.Struct) {
 	result = make(xmlrpc.Struct)
 
-	result["uuid"] =
+	result["uuid"] = PBD.Uuid
 
-		PBD.Uuid
+	result["host"] = PBD.Host
 
-	result["host"] =
-
-		PBD.Host
-
-	result["SR"] =
-
-		PBD.SR
+	result["SR"] = PBD.SR
 
 	device_config := make(xmlrpc.Struct)
 	for key, value := range PBD.DeviceConfig {
@@ -41,9 +35,7 @@ func FromPBDToXml(PBD *PBD) (result xmlrpc.Struct) {
 	}
 	result["device_config"] = device_config
 
-	result["currently_attached"] =
-
-		PBD.CurrentlyAttached
+	result["currently_attached"] = PBD.CurrentlyAttached
 
 	other_config := make(xmlrpc.Struct)
 	for key, value := range PBD.OtherConfig {
